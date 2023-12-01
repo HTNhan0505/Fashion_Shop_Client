@@ -1,0 +1,102 @@
+<div
+  class="wrapper"
+  style="background-image: url('../../../../assets/bg-registration-form-1.jpg')"
+>
+  <nz-alert
+    *ngIf="errorMessage"
+    nzShowIcon
+    nzType="error"
+    [nzMessage]="errorMessage"
+    [ngStyle]="{
+      position: 'absolute',
+      top: '15%',
+      transform: 'translate(-50%,-50%)',
+      transition: 'all .5s',
+      left: '50%'
+    }"
+  ></nz-alert>
+  <div class="inner">
+    <div class="image-holder">
+      <img
+        style="width: 100%; height: 100%; object-fit: cover"
+        src="../../../../assets/Register.jpg"
+        alt=""
+      />
+    </div>
+    <form #registerForm="ngForm" (ngSubmit)="onSubmit()">
+      <h3>Register Form</h3>
+      <div class="form-group">
+        <input
+          nz-input
+          type="text"
+          class="form-control"
+          name="first_name"
+          [(ngModel)]="first_name"
+          placeholder="First name"
+        />
+        <input
+          nz-input
+          type="email"
+          name="last_name"
+          [(ngModel)]="last_name"
+          placeholder="Last name"
+          class="form-control"
+        />
+      </div>
+      <div class="form-wrapper">
+        <input
+          nz-input
+          type="email"
+          name="email"
+          class="form-control"
+          [(ngModel)]="email"
+          placeholder="Email"
+        />
+      </div>
+      <div class="form-wrapper">
+        <input
+          nz-input
+          type="text"
+          name="phone"
+          class="form-control"
+          [(ngModel)]="phone"
+          placeholder="Phone"
+        />
+      </div>
+      <div class="form-wrapper">
+        <input
+          nz-input
+          type="password"
+          name="password"
+          class="form-control"
+          [(ngModel)]="password"
+          placeholder="Password"
+        />
+      </div>
+      <div class="form-wrapper">
+        <input
+          nz-input
+          type="password"
+          name="confirmPassword"
+          class="form-control"
+          [(ngModel)]="confirmPassword"
+          placeholder="Confirm password"
+        />
+      </div>
+
+      <div class="form-wrapper">
+        <button
+          nz-button
+          type="submit"
+          [disabled]="!canSubmit()"
+          [nzLoading]="loading"
+        >
+          Sign up
+        </button>
+      </div>
+      <div class="form-wrapper mt-30">
+        <a routerLink="/login" class="navigate-link">I had an account user!</a>
+      </div>
+    </form>
+  </div>
+</div>

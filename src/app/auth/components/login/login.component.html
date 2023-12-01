@@ -1,0 +1,64 @@
+<div
+  class="wrapper"
+  style="background-image: url('../../../../assets/bg-registration-form-1.jpg')"
+>
+  <nz-alert
+    *ngIf="error"
+    nzShowIcon
+    nzType="error"
+    [nzMessage]="error"
+    [ngStyle]="{
+      position: 'absolute',
+      top: '15%',
+      transform: 'translate(-50%,-50%)',
+      transition: 'all .5s',
+      left: '50%'
+    }"
+  ></nz-alert>
+  <div class="inner">
+    <div class="image-holder">
+      <img
+        style="width: 100%; height: 100%; object-fit: cover"
+        src="../../../../assets/Register.jpg"
+        alt=""
+      />
+    </div>
+    <form (ngSubmit)="onSubmit()">
+      <h3>Login Form</h3>
+      <div class="form-wrapper">
+        <input
+          nz-input
+          class="form-control"
+          type="email"
+          name="email"
+          placeholder="Enter email address"
+          [(ngModel)]="email"
+        />
+      </div>
+      <div class="form-wrapper">
+        <input
+          nz-input
+          class="form-control"
+          type="password"
+          name="password"
+          placeholder="Enter your password"
+          [(ngModel)]="password"
+        />
+      </div>
+      <div class="form-wrapper">
+        <button
+          nz-button
+          type="submit"
+          [disabled]="!canSubmit()"
+          [nzLoading]="loading"
+        >
+          Sign in
+        </button>
+      </div>
+      <div class="form-group mt-30 j-between">
+        <a class="navigate-link" href="">Forgot password?</a>
+        <a class="navigate-link" routerLink="/register">Create a new account</a>
+      </div>
+    </form>
+  </div>
+</div>
