@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:5000/api/v1/',
-  apiUrlMain: 'http://localhost:3000/'
+  apiUrlMain: 'http://localhost:3000/',
+  apiUrlAdmin: 'http://localhost:3000/admin/',
 };
 
 /*

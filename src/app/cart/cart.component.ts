@@ -16,7 +16,7 @@ export class CartComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   updateCart(id: number, quantity: number): void {
     console.log({ id, quantity });

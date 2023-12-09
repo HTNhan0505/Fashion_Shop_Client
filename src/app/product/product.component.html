@@ -1,7 +1,6 @@
-<div class="product-container" *ngIf="!loading">
+<!-- <div class="product-container" *ngIf="!loading">
   <div>
     <div class="product-container__image">
-      <!-- Single Image -->
       <swiper
         [zoom]="true"
         [slidesPerView]="1"
@@ -13,7 +12,6 @@
           <img src="{{ product.image }}" alt="`Product image`" />
         </ng-template>
       </swiper>
-      <!-- Multiple images -->
       <swiper
         [zoom]="true"
         [slidesPerView]="1"
@@ -46,7 +44,7 @@
         >
       </div>
       <div class="price-container">
-        <h2 class="price">{{ product.price | currency: "USD" }}</h2>
+        <h2 class="price">{{ product.price | currency : "USD" }}</h2>
         <span
           class="availability"
           [ngStyle]="{ color: quantity > 0 ? 'inherit' : 'red' }"
@@ -86,4 +84,85 @@
     </div>
   </div>
   <div class="additional"></div>
+</div> -->
+<div class="card-wrapper" *ngIf="!loading">
+  <div class="card">
+    <!-- Image Product -->
+    <div class="product-imgs">
+      <div class="img-display">
+        <div class="img-showcase">
+          <img
+            *ngFor="let c of showcaseImages"
+            src="{{ c }}"
+            alt="shoe image"
+          />
+        </div>
+      </div>
+      <div class="img-select">
+        <div
+          [ngClass]="
+            showcaseImages.length > 1 ? 'img-item' : 'img-item single-item'
+          "
+          *ngFor="let c of showcaseImages; index as i"
+          (click)="changeSlide(i + 1)"
+        >
+          <a data-id="{{ index }}">
+            <img src="{{ c }}" alt="shoe image" />
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="product-content">
+      <h2 class="product-title">{{ product.productName }}</h2>
+      <a href="#" class="product-link">{{ product.categoryID }}</a>
+      <div class="product-rating">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star-half-alt"></i>
+        <span>4.7(21)</span>
+      </div>
+
+      <div class="product-price">
+        <p class="last-price">Old Price: <span>VNĐ 257.00</span></p>
+        <p class="new-price">
+          New Price: <span>VNĐ {{ product.price }}</span>
+        </p>
+      </div>
+
+      <div class="product-detail">
+        <h2>about this item:</h2>
+        <p>
+          {{ product.detail }}
+        </p>
+        <ul>
+          <li>Available: <span>in stock</span></li>
+          <li>
+            Gender: <span>{{ product.gender }}</span>
+          </li>
+          <li>Shipping Area: <span>All over the world</span></li>
+          <li>Shipping Fee: <span>Free</span></li>
+        </ul>
+      </div>
+
+      <div class="purchase-info">
+        <!-- <input type="number" min="0" value="1" /> -->
+        <nz-input-number
+          [(ngModel)]="quantity"
+          [nzMin]="product.quantity > 0 ? 1 : 0"
+          [nzMax]="product.quantity > 0 ? product.quantity : 0"
+          [nzStep]="1"
+        ></nz-input-number>
+        <button
+          *ngIf="quantity > 0"
+          type="button"
+          class="btn"
+          (click)="addToCart()"
+        >
+          Add to Cart <i class="fas fa-shopping-cart"></i>
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

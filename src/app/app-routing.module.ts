@@ -8,14 +8,12 @@ import { OrderHistoryComponent } from './order-history/order-history.component';
 import { ProductComponent } from './product/product.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './auth/components/register/register.component';
-import { VerifyComponent } from './auth/components/verify/verify.component';
 import { AuthGuardService } from './guards/auth-guard.service';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'verify', component: VerifyComponent },
   {
     path: 'profile',
     component: ProfileComponent,
@@ -39,4 +37,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

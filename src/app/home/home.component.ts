@@ -18,53 +18,11 @@ import { TokenStorageService } from '../services/token-storage.service';
 export class HomeComponent implements OnInit {
   products: Product[] = [];
   categories: any[] = [
-    {
-      name: 'Laptops',
-    },
-    {
-      name: 'Accessories',
-    },
-    {
-      name: 'Cameras',
-    },
-    {
-      name: 'Shoes',
-    },
-    {
-      name: 'Hat',
-    },
-    {
-      name: 'Dress',
-    },
-    {
-      name: 'Tee',
-    },
-    {
-      name: 'Tee',
-    },
-    {
-      name: 'Tee',
-    },
-    {
-      name: 'Tee',
-    },
-    {
-      name: 'Tee',
-    },
-    {
-      name: 'Tee',
-    },
-    {
-      name: 'Tee',
-    },
-    {
-      name: 'Tee',
-    },
-    {
-      name: 'Tee',
-    },
   ];
   loading = false;
+  pageNumber = 0;
+  pageSize = 5;
+  total = 0
   productPageCounter = 1;
   additionalLoading = false;
 
@@ -87,11 +45,12 @@ export class HomeComponent implements OnInit {
     this.screenWidth = window.innerWidth;
     this.screenHeight = window.innerHeight;
     this.loading = true;
+    this.getProduct()
+
     setTimeout(() => {
-      this.productService.getAllProducts(9, this.productPageCounter).subscribe(
+      this.productService.getCategoryList().subscribe(
         (res: any) => {
-          console.log(res);
-          this.products = res;
+          this.categories = res.data
           this.loading = false;
         },
         (err) => {
@@ -102,21 +61,24 @@ export class HomeComponent implements OnInit {
     }, 500);
   }
 
+  getProduct() {
+    this.productService.getProductList(this.pageNumber, this.pageSize).subscribe(
+      (res: any) => {
+        this.products = [...this.products, ...res.data];
+        this.additionalLoading = false;
+        this.total = Math.ceil(res.total / this.pageSize)
+      },
+      (err) => {
+        console.log(err);
+        this.additionalLoading = false;
+      }
+    );
+
+  }
+
   showMoreProducts(): void {
     this.additionalLoading = true;
-    this.productPageCounter = this.productPageCounter + 1;
-    setTimeout(() => {
-      this.productService.getAllProducts(9, this.productPageCounter).subscribe(
-        (res: any) => {
-          console.log(res);
-          this.products = [...this.products, ...res];
-          this.additionalLoading = false;
-        },
-        (err) => {
-          console.log(err);
-          this.additionalLoading = false;
-        }
-      );
-    }, 500);
+    this.pageNumber++;
+    this.getProduct()
   }
 }

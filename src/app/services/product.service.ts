@@ -10,8 +10,12 @@ import { ApiService } from './api.service';
 })
 export class ProductService {
   private url = environment.apiUrl;
+  // private apiUrlAdmin = environment.apiUrlAdmin;
+  private apiUrlMain = environment.apiUrlMain;
 
-  constructor(private http: HttpClient, private _api: ApiService) {}
+
+
+  constructor(private http: HttpClient, private _api: ApiService) { }
 
   getAllProducts(limitOfResults = 9, page): Observable<Products> {
     return this.http.get<Products>(this.url + 'products', {
@@ -22,8 +26,17 @@ export class ProductService {
     });
   }
 
+  getProductList(pageNumber: number, pageSize: number): Observable<any> {
+    const url = `${this.apiUrlMain}users/product/list?offset=${pageNumber}&limit=${pageSize}`;
+    return this.http.get<any>(url);
+  }
+
+  getCategoryList(): Observable<any> {
+    return this.http.get('http://localhost:3000/admin/getcategory/list');
+  }
+
   getSingleProduct(id: Number): Observable<any> {
-    console.log(id);
-    return this._api.getTypeRequest('products/' + id);
+    // console.log(id);
+    return this._api.getTypeRequest('users/product/' + id);
   }
 }
