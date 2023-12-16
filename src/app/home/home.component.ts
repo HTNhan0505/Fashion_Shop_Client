@@ -9,6 +9,7 @@ import { ProductService } from '../services/product.service';
 import { Products, Product } from '../shared/models/product.model';
 import { TokenStorageService } from '../services/token-storage.service';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -16,6 +17,7 @@ import { TokenStorageService } from '../services/token-storage.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class HomeComponent implements OnInit {
+
   products: Product[] = [];
   categories: any[] = [
   ];
@@ -52,8 +54,12 @@ export class HomeComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private cartService: CartService,
-    private _token: TokenStorageService
-  ) { }
+    private _token: TokenStorageService,
+    private _cart: CartService,
+
+  ) {
+
+  }
 
   public screenWidth: any;
   public screenHeight: any;
@@ -64,12 +70,14 @@ export class HomeComponent implements OnInit {
     this.screenHeight = window.innerHeight;
   }
 
+
   ngOnInit(): void {
     this.slideIndex = 0
     this.screenWidth = window.innerWidth;
     this.screenHeight = window.innerHeight;
     this.loading = true;
     this.getProduct()
+
 
     setTimeout(() => {
       this.productService.getCategoryList().subscribe(
@@ -82,23 +90,24 @@ export class HomeComponent implements OnInit {
         }
       );
     }, 500);
+    this.changeSlide()
   }
   // Lấy product theo offset và limit
   getProduct() {
     this.productService.getProductList(this.pageNumber, this.pageSize).subscribe(
       (res: any) => {
+        // console.log("data", res)
         this.products = [...this.products, ...res.data];
         this.additionalLoading = false;
         this.total = Math.ceil(res.total / this.pageSize)
       },
       (err) => {
-        console.log(err);
+        // console.log(err);
         this.additionalLoading = false;
       }
     );
 
   }
-
 
   // Hàm này handle cho nút show more sẽ tăng offset thêm 1
   showMoreProducts(): void {
@@ -122,5 +131,15 @@ export class HomeComponent implements OnInit {
     } else {
       this.slideIndex = this.slideIndex - 1
     }
+  }
+  // Test setInterVal
+  changeSlide() {
+    setInterval(() => {
+      if (this.slideIndex + 1 > this.banner.length - 1) {
+        this.slideIndex = 0
+      } else {
+        this.slideIndex = this.slideIndex + 1
+      }
+    }, 3000);
   }
 }

@@ -29,5 +29,6 @@ export class TokenStorageService {
 
   clearStorage(): void {
     sessionStorage.clear();
+    localStorage.clear();
   }
 }

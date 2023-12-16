@@ -32,10 +32,10 @@ export class ProductService {
   }
 
   getCategoryList(): Observable<any> {
-    return this.http.get('http://localhost:3000/admin/getcategory/list');
+    return this.http.get('http://localhost:3000/users/get-category/list');
   }
 
-  getSingleProduct(id: Number): Observable<any> {
+  getSingleProduct(id: any): Observable<any> {
     // console.log(id);
     return this._api.getTypeRequest('users/product/' + id);
   }

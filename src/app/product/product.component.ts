@@ -62,13 +62,13 @@ export class ProductComponent implements OnInit {
       });
   }
   addToCart(): void {
-    console.log(this.product)
     this._cart.addProduct({
       productID: this.product.productId,
       price: this.product.price,
       itemQuantity: this.quantity,
       listImage: this.product.listImage,
       productName: this.product.productName,
+      quantity: this.product.quantity
     }).subscribe(
       response => {
         // Xử lý phản hồi từ API (nếu cần)

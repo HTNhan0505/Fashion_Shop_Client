@@ -1,30 +1,33 @@
 <div class="cart-container">
-  <div class="cart-container__empty" *ngIf="cartData.products.length === 0">
+  <div class="cart-container__empty" *ngIf="total === 0">
     Your cart is empty.
   </div>
-  <div class="cart-container__list" *ngIf="cartData.products.length > 0">
+  <div class="cart-container__list" *ngIf="total > 0">
     <header class="list-header">
       <h2>Cart</h2>
     </header>
     <div
       class="list-item"
-      *ngFor="let product of cartData.products; index as i"
-      [ngStyle]="{ border: i === cartData.products.length - 1 && 'none' }"
+      *ngFor="let product of products; index as i"
+      [ngStyle]="{ border: i === products.length - 1 && 'none' }"
     >
-      <div class="list-item__remove" (click)="removeCartItem(product.id)">
+      <div
+        class="list-item__remove"
+        (click)="removeCartItem(product.cartItemID)"
+      >
         X
       </div>
       <div class="list-item__image">
-        <img [src]="product.image" alt="" />
+        <img [src]="product.listImage[0]" alt="" />
       </div>
       <div class="list-item__details">
-        <div class="title">{{ product.title }}</div>
-        <div class="price">{{ product.price | currency: "USD" }}</div>
+        <div class="title">{{ product.productName }}</div>
+        <div class="price">{{ product.price | currency : "VND" }}</div>
         <div class="cta">
           <nz-input-number
-            [(ngModel)]="product.quantity"
-            [nzMin]="product.maxQuantity > 0 ? 1 : 0"
-            [nzMax]="product.maxQuantity > 0 ? product.maxQuantity : 0"
+            [(ngModel)]="product.itemQuantity"
+            [nzMin]="product.quantity > 0 ? 1 : 0"
+            [nzMax]="product.quantity > 0 ? product.quantity : 0"
             [nzStep]="1"
             (ngModelChange)="updateCart(product.id, product.quantity)"
           ></nz-input-number>
@@ -36,11 +39,11 @@
     <div class="price">
       <span>
         <h3>Total amount</h3>
-        <h2>{{ cartData.total | currency: "USD" }}</h2></span
+        <h2>{{ cartData.total | currency : "VND" }}</h2></span
       >
       <span>
         <h3>Total items</h3>
-        <h2>{{ cartData.products.length }}</h2>
+        <h2>{{ total }}</h2>
       </span>
     </div>
     <div class="cta">
@@ -56,3 +59,100 @@
     </div>
   </div>
 </div>
+
+<!-- Template -->
+
+<!-- <div class="card">
+  <div class="row">
+    <div class="col-md-8 cart">
+      <div class="title">
+        <div class="row">
+          <div class="col">
+            <h4><b>Shopping Cart</b></h4>
+          </div>
+          <div class="col align-self-center text-right text-muted">3 items</div>
+        </div>
+      </div>
+      <div class="row border-top border-bottom">
+        <div class="row main align-items-center">
+          <div class="col-2">
+            <img class="img-fluid" src="https://i.imgur.com/1GrakTl.jpg" />
+          </div>
+          <div class="col">
+            <div class="row text-muted">Shirt</div>
+            <div class="row">Cotton T-shirt</div>
+          </div>
+          <div class="col">
+            <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
+          </div>
+          <div class="col">
+            &euro; 44.00 <span class="close">&#10005;</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="row main align-items-center">
+          <div class="col-2">
+            <img class="img-fluid" src="https://i.imgur.com/ba3tvGm.jpg" />
+          </div>
+          <div class="col">
+            <div class="row text-muted">Shirt</div>
+            <div class="row">Cotton T-shirt</div>
+          </div>
+          <div class="col">
+            <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
+          </div>
+          <div class="col">
+            &euro; 44.00 <span class="close">&#10005;</span>
+          </div>
+        </div>
+      </div>
+      <div class="row border-top border-bottom">
+        <div class="row main align-items-center">
+          <div class="col-2">
+            <img class="img-fluid" src="https://i.imgur.com/pHQ3xT3.jpg" />
+          </div>
+          <div class="col">
+            <div class="row text-muted">Shirt</div>
+            <div class="row">Cotton T-shirt</div>
+          </div>
+          <div class="col">
+            <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a>
+          </div>
+          <div class="col">
+            &euro; 44.00 <span class="close">&#10005;</span>
+          </div>
+        </div>
+      </div>
+      <div class="back-to-shop">
+        <a href="#">&#8592;</a><span class="text-muted">Back to shop</span>
+      </div>
+    </div>
+    <div class="col-md-4 summary">
+      <div>
+        <h5><b>Summary</b></h5>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col" style="padding-left: 0">ITEMS 3</div>
+        <div class="col text-right">&euro; 132.00</div>
+      </div>
+      <form>
+        <p>SHIPPING</p>
+        <select>
+          <option class="text-muted">Standard-Delivery- &euro;5.00</option>
+        </select>
+        <p>GIVE CODE</p>
+        <input id="code" placeholder="Enter your code" />
+      </form>
+      <div
+        class="row"
+        style="border-top: 1px solid rgba(0, 0, 0, 0.1); padding: 2vh 0"
+      >
+        <div class="col">TOTAL PRICE</div>
+        <div class="col text-right">&euro; 137.00</div>
+      </div>
+      <button class="btn">CHECKOUT</button>
+    </div>
+  </div>
+</div> -->

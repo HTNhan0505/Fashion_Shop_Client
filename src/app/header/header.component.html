@@ -25,7 +25,7 @@
   </div>
   <div class="header-container__right">
     <ng-container>
-      <div class="cart-counter">{{ cartData.products.length }}</div>
+      <div class="cart-counter">{{ isLoggedIn ? total : 0 }}</div>
       <button
         nz-button
         nz-dropdown
@@ -34,9 +34,9 @@
         nzPlacement="right"
         nzShape="circle"
         nzSize="large"
-        [nzDropdownMenu]="menu"
         [nzVisible]="dropdownVisible"
         (nzVisibleChange)="toggleDropdown()"
+        routerLink="/cart"
       >
         <i
           nz-icon
@@ -44,93 +44,11 @@
           [ngStyle]="{ fontSize: '24px', paddingTop: '3px' }"
         ></i>
       </button>
-      <nz-dropdown-menu #menu="nzDropdownMenu">
-        <div class="cart-dropdown">
-          <div
-            class="cart-dropdown__empty"
-            *ngIf="cartData.products.length === 0"
-          >
-            Your cart is empty.
-          </div>
-          <div
-            class="cart-dropdown__content"
-            *ngIf="cartData.products.length !== 0"
-          >
-            <div class="product-list">
-              <div
-                class="product-list__item"
-                *ngFor="let product of cartData.products; index as i"
-                [ngStyle]="{
-                  'border-bottom':
-                    i !== cartData.products.length - 1 && '1px solid #ccc'
-                }"
-              >
-                <div class="product-item">
-                  <div
-                    class="product-item__remove"
-                    (click)="removeProductFromCart(product.id)"
-                  >
-                    X
-                  </div>
-                  <div class="product-item__image">
-                    <img [src]="product.image" alt="" />
-                  </div>
-                  <div class="product-item__description">
-                    <div class="product-name">{{ product.title }}</div>
-                    <div class="product-amount">
-                      {{ product.quantity }} x
-                      <span>{{ product.price | currency : "USD" }}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="cart-info">
-              <div class="selected-amount">
-                {{ cartData.products.length }} Item(s) selected
-              </div>
-              <div class="total-price">
-                Total: {{ cartData.total | currency : "USD" }}
-              </div>
-            </div>
-            <div class="cart-cta">
-              <button
-                nz-button
-                nzSize="large"
-                routerLink="/cart"
-                (click)="toggleDropdown()"
-                [ngStyle]="{
-                  borderLeft: 'none',
-                  borderRight: 'none',
-                  borderBottom: 'none'
-                }"
-              >
-                View cart
-              </button>
-              <button
-                nz-button
-                nzType="primary"
-                nzSize="large"
-                routerLink="/checkout"
-                (click)="toggleDropdown()"
-                [ngStyle]="{
-                  borderLeft: 'none',
-                  borderRight: 'none',
-                  borderBottom: 'none'
-                }"
-              >
-                Checkout
-              </button>
-            </div>
-          </div>
-        </div>
-      </nz-dropdown-menu>
     </ng-container>
   </div>
 </header>
 
 <div [className]="isMenuOpen ? 'side-menu show' : 'side-menu'">
-  <!-- <i nz-icon nzType="close" nzTheme="outline" (click)="toggleMenu()"></i> -->
   <div class="side-menu__content">
     <h2 routerLink="/" (click)="toggleMenu()">Eccom</h2>
     <nav>

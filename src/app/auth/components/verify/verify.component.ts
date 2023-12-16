@@ -34,7 +34,7 @@ export class VerifyComponent implements OnInit {
         })
         .subscribe(
           (res) => {
-            console.log(res)
+            // console.log(res)
             this.loading = false;
             this._router.navigate(['/login']);
             localStorage.removeItem("userCode");

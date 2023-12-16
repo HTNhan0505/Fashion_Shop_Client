@@ -20,6 +20,9 @@ export class AuthService {
   getUser() {
     return this.userSubject.value;
   }
+  getProfileUser(): Observable<any> {
+    return this._api.getTypeRequest('users/get-user')
+  }
 
   login(credentials: any): Observable<any> {
     return this._api
@@ -59,6 +62,7 @@ export class AuthService {
   }
 
   logout() {
+
     this._token.clearStorage();
     this.userSubject.next(null);
 

@@ -4,6 +4,8 @@ import { AuthService } from '../services/auth.service';
 import { CartService } from '../services/cart.service';
 import { TokenStorageService } from '../services/token-storage.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { ShareService } from '../services/share.service';
 
 @Component({
   selector: 'app-header',
@@ -11,13 +13,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  updateTotal: Subscription;
   screenHeight: any;
   screenWidth: any;
   isMenuOpen = false;
   isMobile = false;
   isLoggedIn = false;
   dropdownVisible = false;
-  cartData: any;
+  // cartData: any;
+  total: any
 
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?) {
@@ -32,21 +36,42 @@ export class HeaderComponent implements OnInit {
     private _token: TokenStorageService,
     private _auth: AuthService,
     private _cart: CartService,
-    private _router: Router
+    private _router: Router,
+    private _share: ShareService
   ) {
     this.getScreenSize();
     this._auth.user.subscribe((user) => {
       if (user) this.isLoggedIn = true;
       else this.isLoggedIn = false;
     });
-    this._cart.cartDataObs$.subscribe((cartData) => {
-      this.cartData = cartData;
-    });
+    this.updateTotal = this._share.getClickEvent().subscribe(() => {
+      this.getCart();
+    })
+
   }
 
   ngOnInit(): void {
     if (this._token.getUser()) this.isLoggedIn = true;
     else this.isLoggedIn = false;
+    this.getCart()
+
+    // console.log("Init")
+  }
+
+  getCart() {
+    this._cart.getTotalCart().subscribe(
+      (res: any) => {
+        if (!res.total) {
+          this.total = 0
+        } else {
+          this.total = res.total
+        }
+        // console.log("data", res)
+      },
+      (err) => {
+        console.log(err)
+      }
+    )
   }
 
   toggleMenu() {

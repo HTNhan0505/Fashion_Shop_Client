@@ -43,7 +43,7 @@ export class RegisterComponent implements OnInit {
           })
           .subscribe(
             (res) => {
-              console.log(res.data.userCode)
+              // console.log(res.data.userCode)
               this.loading = false;
               localStorage.setItem('userCode', res.data.userCode)
               this._router.navigate(['/verify']);
