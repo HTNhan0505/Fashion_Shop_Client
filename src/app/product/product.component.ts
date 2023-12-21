@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 
 import { CartService } from '../services/cart.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { ShareService } from '../services/share.service';
 
 @Component({
   selector: 'app-product',
@@ -25,7 +26,8 @@ export class ProductComponent implements OnInit {
     private _route: ActivatedRoute,
     private _product: ProductService,
     private _cart: CartService,
-    private _notification: NzNotificationService
+    private _notification: NzNotificationService,
+    private _share: ShareService
   ) { }
 
   ngOnInit(): void {
@@ -78,6 +80,7 @@ export class ProductComponent implements OnInit {
           `${this.product.productName} was successfully added to the cart`,
           { nzPlacement: 'bottomLeft' }
         );
+        this._share.sendClickEvent();
         // console.log('Add to cart successful');
       },
       error => {

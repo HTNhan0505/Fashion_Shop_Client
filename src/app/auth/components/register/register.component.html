@@ -25,6 +25,7 @@
     </div>
     <form #registerForm="ngForm" (ngSubmit)="onSubmit()">
       <h3>Register Form</h3>
+      <!-- First name - last name -->
       <div class="form-group">
         <input
           nz-input
@@ -43,6 +44,52 @@
           class="form-control"
         />
       </div>
+      <!-- Province-->
+      <div class="form-wrapper">
+        <select
+          [(ngModel)]="selectedProvince"
+          (change)="onProvinceChange()"
+          class="form-control"
+          name="province"
+        >
+          <option
+            *ngFor="let province of province"
+            [value]="province.ProvinceID"
+          >
+            {{ province.ProvinceName }}
+          </option>
+        </select>
+      </div>
+
+      <!-- City -->
+      <div class="form-wrapper">
+        <select
+          [(ngModel)]="selectedCity"
+          class="form-control"
+          (change)="onCityChange()"
+          name="cities"
+        >
+          <option *ngFor="let city of cities" [value]="city.DistrictID">
+            {{ city.DistrictName }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Ward -->
+      <div class="form-wrapper">
+        <select
+          [(ngModel)]="selectedWard"
+          class="form-control"
+          (change)="onCityChange()"
+          name="wards"
+        >
+          <option *ngFor="let ward of wards" [value]="ward.DistrictID">
+            {{ ward.WardName }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Mail -->
       <div class="form-wrapper">
         <input
           nz-input
@@ -53,6 +100,7 @@
           placeholder="Email"
         />
       </div>
+      <!-- Phone -->
       <div class="form-wrapper">
         <input
           nz-input
@@ -63,6 +111,7 @@
           placeholder="Phone"
         />
       </div>
+      <!-- password -->
       <div class="form-wrapper">
         <input
           nz-input
@@ -73,6 +122,7 @@
           placeholder="Password"
         />
       </div>
+      <!-- Confirm pass -->
       <div class="form-wrapper">
         <input
           nz-input
@@ -83,6 +133,7 @@
           placeholder="Confirm password"
         />
       </div>
+      <!-- Submit -->
 
       <div class="form-wrapper">
         <button

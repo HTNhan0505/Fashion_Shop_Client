@@ -34,7 +34,7 @@ export class ApiService {
     );
   }
   putTypeRequest(url: string, payload: any) {
-    return this._http.put(`${this.baseUrl}${url}`, payload).pipe(
+    return this._http.put(`${this.baseUrlMain}${url}`, payload).pipe(
       map((res) => {
         return res;
       })

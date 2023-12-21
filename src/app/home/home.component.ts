@@ -8,7 +8,8 @@ import { CartService } from '../services/cart.service';
 import { ProductService } from '../services/product.service';
 import { Products, Product } from '../shared/models/product.model';
 import { TokenStorageService } from '../services/token-storage.service';
-
+import { ShareService } from '../services/share.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +18,6 @@ import { TokenStorageService } from '../services/token-storage.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class HomeComponent implements OnInit {
-
   products: Product[] = [];
   categories: any[] = [
   ];
@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit {
     private cartService: CartService,
     private _token: TokenStorageService,
     private _cart: CartService,
-
+    private _share: ShareService
   ) {
 
   }
@@ -91,6 +91,7 @@ export class HomeComponent implements OnInit {
       );
     }, 500);
     this.changeSlide()
+    this._share.sendClickEvent();
   }
   // Lấy product theo offset và limit
   getProduct() {

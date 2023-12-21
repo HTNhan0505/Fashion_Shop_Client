@@ -29,7 +29,9 @@
             [nzMin]="product.quantity > 0 ? 1 : 0"
             [nzMax]="product.quantity > 0 ? product.quantity : 0"
             [nzStep]="1"
-            (ngModelChange)="updateCart(product.id, product.quantity)"
+            (ngModelChange)="
+              updateCart(product.cartItemID, product.itemQuantity)
+            "
           ></nz-input-number>
         </div>
       </div>
@@ -39,7 +41,7 @@
     <div class="price">
       <span>
         <h3>Total amount</h3>
-        <h2>{{ cartData.total | currency : "VND" }}</h2></span
+        <h2>{{ (!totalAmount ? 0 : totalAmount) | currency : "VND" }}</h2></span
       >
       <span>
         <h3>Total items</h3>
@@ -51,7 +53,7 @@
         nz-button
         nzType="primary"
         routerLink="/checkout"
-        [disabled]="cartData.products.length === 0"
+        [disabled]="total === 0"
       >
         Checkout
       </button>

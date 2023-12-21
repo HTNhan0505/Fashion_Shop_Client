@@ -2,12 +2,16 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ApiService } from './api.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
+
+  private token = '5c4242e4-9bf5-11ee-96dc-de6f804954c9'; // Thay thế bằng mã API của bạn
+
+
   cartData = {
     products: [],
     total: 0,
@@ -60,7 +64,7 @@ export class CartService {
         };
       }
 
-      // console.log(updatedProducts);
+
       this.cartData.products = updatedProducts;
     }
 
@@ -87,21 +91,12 @@ export class CartService {
     return this._api.getTypeRequest('users/cart');
   }
 
-  updateCart(id: number, quantity: number): void {
-    // copy array, find item index and update
-    let updatedProducts = [...this.cartData.products];
-    let productIndex = updatedProducts.findIndex((prod) => prod.id == id);
+  updateCart(id: string, quantity: number): Observable<any> {
+    return this._api.putTypeRequest('users/cart/update', {
+      cartItemID: id,
+      itemQuantity: quantity
+    })
 
-    updatedProducts[productIndex] = {
-      ...updatedProducts[productIndex],
-      quantity: quantity,
-    };
-
-    this.cartData.products = updatedProducts;
-    this.cartData.total = this.getCartTotal();
-    this.cartDataObs$.next({ ...this.cartData });
-    console.log(this.cartData.products);
-    localStorage.setItem('cart', JSON.stringify(this.cartData));
   }
 
   removeProduct(id: any): Observable<any> {
@@ -119,16 +114,13 @@ export class CartService {
 
   getCartTotal(): number {
     let totalSum = 0;
-    // this.cartData.products.forEach(
-    //   (prod) => (totalSum += prod.price * prod.quantity)
-    // );
     this.getTotalCart().subscribe(
       (res: any) => {
         totalSum = res.total
-        console.log("data", res)
+
       },
       (err) => {
-        console.log(err)
+
       }
     )
     return totalSum;
@@ -138,4 +130,43 @@ export class CartService {
     // return true
     return this.cartData.products.findIndex((prod) => prod.id === id) !== -1;
   }
+
+
+
+  getProvinces() {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'token': this.token
+    });
+
+    return this.http.get('https://online-gateway.ghn.vn/shiip/public-api/master-data/province', { headers });
+  }
+
+  getCities(provinceId: any) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'token': this.token
+    });
+
+    const body = {
+      "province_id": provinceId
+    };
+
+    return this.http.post('https://online-gateway.ghn.vn/shiip/public-api/master-data/district', body, { headers });
+  }
+
+
+  getWard(districtId: any) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'token': this.token
+    });
+
+    const body = {
+      "district_id": districtId
+    };
+
+    return this.http.post('https://online-gateway.ghn.vn/shiip/public-api/master-data/ward', body, { headers });
+  }
+
 }

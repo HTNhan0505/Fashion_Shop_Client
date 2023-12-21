@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ApiService } from '../../../services/api.service';
+import { CartService } from 'src/app/services/cart.service';
+
 
 @Component({
   selector: 'app-register',
@@ -17,13 +19,25 @@ export class RegisterComponent implements OnInit {
   confirmPassword = '';
   errorMessage = '';
   loading = false;
+
+
+  province: any[];
+  cities: any[];
+  wards: any[]
+
+  selectedProvince: string;
+  selectedCity: string;
+  selectedWard: string;
+
   constructor(
     private _api: ApiService,
     private _auth: AuthService,
-    private _router: Router
+    private _router: Router,
+    private _cart: CartService
   ) { }
 
   ngOnInit(): void {
+    this.getProvince()
   }
 
   onSubmit(): void {
@@ -43,7 +57,6 @@ export class RegisterComponent implements OnInit {
           })
           .subscribe(
             (res) => {
-              // console.log(res.data.userCode)
               this.loading = false;
               localStorage.setItem('userCode', res.data.userCode)
               this._router.navigate(['/verify']);
@@ -67,5 +80,39 @@ export class RegisterComponent implements OnInit {
     return this.first_name && this.last_name && this.password && this.phone && this.email && this.confirmPassword
       ? true
       : false;
+  }
+  getProvince() {
+    this._cart.getProvinces().subscribe(
+      (data: any) => {
+        console.log("Province : ", data.data)
+        this.province = data.data;
+      },
+      (error) => {
+      }
+    );
+  }
+  onProvinceChange() {
+    this._cart.getCities(parseInt(this.selectedProvince)).subscribe(
+      (data: any) => {
+        console.log("City : ", data.data)
+        this.cities = data.data
+      },
+      (error) => {
+      }
+    );
+  }
+  onCityChange() {
+    this._cart.getWard(parseInt(this.selectedCity)).subscribe(
+      (data: any) => {
+        console.log("Ward : ", data.data)
+        this.wards = data.data
+      },
+      (error) => {
+      }
+    );
+  }
+
+  onWardChange() {
+
   }
 }

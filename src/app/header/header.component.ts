@@ -66,10 +66,8 @@ export class HeaderComponent implements OnInit {
         } else {
           this.total = res.total
         }
-        // console.log("data", res)
       },
       (err) => {
-        console.log(err)
       }
     )
   }
