@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
     private _share: ShareService,
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { localStorage.clear() }
 
   onSubmit(): void {
     this.loading = true;
@@ -54,5 +54,35 @@ export class LoginComponent implements OnInit {
 
   canSubmit(): boolean {
     return this.email.length > 0 && this.password.length > 0;
+  }
+
+  checkEmail() {
+    if (this.email.length < 5) {
+      this.error = 'Please type your email';
+    } else {
+      this._auth
+        .forgotPassWord({ email: this.email })
+        .subscribe(
+          (res) => {
+            this.loading = false;
+            this._router.navigate(['/verify']);
+            localStorage.setItem('emailUser', this.email)
+            // this._share.sendClickEvent();
+          },
+          (err) => {
+            if (err.status == 401) {
+              this.loading = false;
+              this._notification.error(
+                'Error',
+                'Email is not exist',
+
+                { nzPlacement: 'bottomLeft' }
+              );
+            }
+
+          }
+        );
+    }
+
   }
 }

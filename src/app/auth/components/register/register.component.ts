@@ -4,7 +4,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ApiService } from '../../../services/api.service';
 import { CartService } from 'src/app/services/cart.service';
 
-
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -18,12 +17,14 @@ export class RegisterComponent implements OnInit {
   password = '';
   confirmPassword = '';
   errorMessage = '';
+  province = '';
+  district = '';
+  ward = '';
   loading = false;
 
-
-  province: any[];
+  provinces: any[];
   cities: any[];
-  wards: any[]
+  wards: any[];
 
   selectedProvince: string;
   selectedCity: string;
@@ -37,12 +38,23 @@ export class RegisterComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getProvince()
+    this.getProvince();
+    localStorage.clear()
   }
 
   onSubmit(): void {
     this.errorMessage = '';
-    if (this.first_name && this.last_name && this.password && this.phone && this.email && this.confirmPassword) {
+    if (
+      this.first_name &&
+      this.last_name &&
+      this.password &&
+      this.phone &&
+      this.email &&
+      this.confirmPassword &&
+      this.province &&
+      this.district &&
+      this.ward
+    ) {
       if (this.password !== this.confirmPassword) {
         this.errorMessage = 'Passwords need to match';
       } else {
@@ -54,18 +66,21 @@ export class RegisterComponent implements OnInit {
             email: this.email,
             phone: this.phone,
             password: this.password,
+            province: this.province,
+            district: this.district,
+            ward: this.ward
           })
           .subscribe(
             (res) => {
               this.loading = false;
-              localStorage.setItem('userCode', res.data.userCode)
+              localStorage.setItem('userCode', res.data.userCode);
               this._router.navigate(['/verify']);
             },
             (err) => {
               if (err.status === 400) {
                 this.errorMessage = 'Email or phone number already exists';
               } else {
-                this.errorMessage = 'Please check all fields again'
+                this.errorMessage = 'Please check all fields again';
               }
               this.loading = false;
             }
@@ -77,42 +92,49 @@ export class RegisterComponent implements OnInit {
   }
 
   canSubmit(): boolean {
-    return this.first_name && this.last_name && this.password && this.phone && this.email && this.confirmPassword
+    return this.first_name &&
+      this.last_name &&
+      this.password &&
+      this.phone &&
+      this.email &&
+      this.confirmPassword && this.province &&
+      this.district &&
+      this.ward
       ? true
       : false;
   }
   getProvince() {
     this._cart.getProvinces().subscribe(
       (data: any) => {
-        console.log("Province : ", data.data)
-        this.province = data.data;
+        console.log('Province : ', data.data);
+        this.provinces = data.data;
       },
-      (error) => {
-      }
+      (error) => { }
     );
   }
   onProvinceChange() {
+    this.province = this.selectedProvince;
     this._cart.getCities(parseInt(this.selectedProvince)).subscribe(
       (data: any) => {
-        console.log("City : ", data.data)
-        this.cities = data.data
+        console.log('City : ', data.data);
+        this.cities = data.data;
       },
-      (error) => {
-      }
+      (error) => { }
     );
   }
   onCityChange() {
+    this.district = this.selectedCity;
     this._cart.getWard(parseInt(this.selectedCity)).subscribe(
       (data: any) => {
-        console.log("Ward : ", data.data)
-        this.wards = data.data
+        console.log('Ward : ', data.data);
+        this.wards = data.data;
       },
-      (error) => {
-      }
+      (error) => { }
     );
   }
 
   onWardChange() {
-
+    this.ward = this.selectedWard;
+    // console.log(this.selectedWard)
   }
 }

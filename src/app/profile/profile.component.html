@@ -38,11 +38,17 @@
   style="background-image: url('../../../../assets/bg-registration-form-1.jpg')"
 >
   <nz-alert
+    *ngIf="alertVisible"
     [nzType]="alertType"
     nzShowIcon
     [nzMessage]="alertMessage"
-    [ngStyle]="{ marginBottom: '12px' }"
-    *ngIf="alertVisible"
+    [ngStyle]="{
+      position: 'absolute',
+      top: '15%',
+      transform: 'translate(-50%,-50%)',
+      transition: 'all .5s',
+      left: '50%'
+    }"
   ></nz-alert>
   <div class="inner">
     <div class="image-holder">
@@ -67,6 +73,52 @@
           [(ngModel)]="field.value"
         />
       </div>
+
+      <!-- Province-->
+      <div class="form-wrapper">
+        <select
+          [(ngModel)]="selectedProvince"
+          (change)="onProvinceChange()"
+          class="form-control"
+          name="province"
+        >
+          <option
+            *ngFor="let province of provinces"
+            [value]="province.ProvinceID"
+          >
+            {{ province.ProvinceName }}
+          </option>
+        </select>
+      </div>
+
+      <!-- City -->
+      <div class="form-wrapper">
+        <select
+          [(ngModel)]="selectedCity"
+          class="form-control"
+          (change)="onCityChange()"
+          name="cities"
+        >
+          <option *ngFor="let city of cities" [value]="city.DistrictID">
+            {{ city.DistrictName }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Ward -->
+      <div class="form-wrapper">
+        <select
+          [(ngModel)]="selectedWard"
+          class="form-control"
+          name="wards"
+          (change)="onWardChange()"
+        >
+          <option *ngFor="let ward of wards" [value]="ward.WardCode">
+            {{ ward.WardName }}
+          </option>
+        </select>
+      </div>
+
       <div class="form-wrapper">
         <button
           nz-button

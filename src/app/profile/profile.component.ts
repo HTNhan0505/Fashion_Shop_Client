@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
 import { TokenStorageService } from '../services/token-storage.service';
 import { AuthService } from '../services/auth.service';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-profile',
@@ -37,33 +38,47 @@ export class ProfileComponent implements OnInit {
   alertVisible = false;
   loading = false;
 
+  province = '';
+  district = '';
+  ward = '';
+
+  provinces: any[];
+  cities: any[];
+  wards: any[];
+
+  selectedProvince: any;
+  selectedCity: any;
+  selectedWard: any;
+
   constructor(
     private _api: ApiService,
     private _token: TokenStorageService,
     private _router: Router,
-    private _auth: AuthService
+    private _auth: AuthService,
+    private _cart: CartService
   ) { }
 
   // Update user fields with current details
   ngOnInit(): void {
-    // const { first_name, last_name, phone } = this._token.getUser();
-    // this.userId = user_id;
-
-
     this.getUser()
-
-    // this.user[0].value = fname;
-    // this.user[1].value = email;
-
-
   }
 
   getUser() {
     this._auth.getProfileUser().subscribe(
       (res: any) => {
+
         this.user[0].value = res.first_name;
         this.user[1].value = res.last_name;
         this.user[2].value = res.email;
+
+        this.selectedProvince = res.province
+        this.selectedCity = res.district
+        this.selectedWard = res.ward
+
+        this.getProvince()
+        this.getDistrict()
+        this.getWard()
+
         this.loading = false;
       },
       (err) => {
@@ -81,36 +96,80 @@ export class ProfileComponent implements OnInit {
   // Submit data to be updated
   onSubmit(): void {
     this.alertVisible = false;
-    // this.loading = true;
-    // this._api
-    //   .putTypeRequest(`users/${this.userId}`, {
-    //     fullName: this.user[0].value,
-    //     email: this.user[1].value,
-    //     password: this.user[2].value,
-    //   })
-    //   .subscribe(
-    //     (res: any) => {
-    //       console.log(res);
-    //       this.alertMessage = res.message;
-    //       this.alertType = 'success';
-    //       this.alertVisible = true;
-    //       this.loading = false;
-    //       const oldDetails = this._token.getUser();
-    //       this._token.setUser({
-    //         ...oldDetails,
-    //         fname: this.user[0].value,
-    //         email: this.user[1].value,
-    //       });
-    //       this.user[2].value = '';
-    //       this.user[3].value = '';
-    //     },
-    //     (err: any) => {
-    //       console.log(err);
-    //       this.alertMessage = err.error.message;
-    //       this.alertVisible = true;
-    //       this.alertType = 'error';
-    //       this.loading = false;
-    //     }
-    //   );
+    this.loading = true;
+    this._api
+      .putTypeRequest('users/cart/update', {
+        first_name: this.user[0].value,
+        last_name: this.user[1].value,
+        email: this.user[2].value,
+        province: this.province,
+        district: this.district,
+        ward: this.ward
+      })
+      .subscribe(
+        (res: any) => {
+          console.log("success")
+          this.alertMessage = 'success';
+          this.alertType = 'success';
+          this.alertVisible = true;
+          this.loading = false;
+          // const oldDetails = this._token.getUser();
+          // this._token.setUser({
+          //   ...oldDetails,
+          //   fname: this.user[0].value,
+          //   email: this.user[1].value,
+          // });
+          // this.user[2].value = '';
+          // this.user[3].value = '';
+        },
+        (err: any) => {
+
+          this.alertMessage = 'error';
+          this.alertVisible = true;
+          this.alertType = 'error';
+          this.loading = false;
+        }
+      );
+  }
+
+
+
+  getProvince() {
+    this._cart.getProvinces().subscribe(
+      (data: any) => {
+        this.provinces = data.data;
+      },
+      (error) => { }
+    );
+  }
+  getDistrict() {
+
+    this._cart.getCities(parseInt(this.selectedProvince)).subscribe(
+      (data: any) => {
+        this.cities = data.data;
+      },
+      (error) => { }
+    );
+  }
+  getWard() {
+    this._cart.getWard(parseInt(this.selectedCity)).subscribe(
+      (data: any) => {
+        this.wards = data.data;
+      },
+      (error) => { }
+    );
+  }
+
+  onProvinceChange() {
+    this.province = this.selectedProvince;
+    this.getDistrict()
+  }
+  onCityChange() {
+    this.district = this.selectedCity;
+    this.getWard()
+  }
+
+  onWardChange() {
+    this.ward = this.selectedWard;
   }
 }

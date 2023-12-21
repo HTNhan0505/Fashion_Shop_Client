@@ -44,6 +44,8 @@ export class AuthService {
       );
   }
 
+
+
   register(user: any): Observable<any> {
     return this._api.postTypeRequest('users/signup', {
       first_name: user.first_name,
@@ -51,6 +53,9 @@ export class AuthService {
       email: user.email,
       phone: user.phone,
       password: user.password,
+      province: user.province,
+      district: user.district,
+      ward: user.ward
     });
   }
 
@@ -58,6 +63,20 @@ export class AuthService {
     return this._api.postTypeRequest('users/verify', {
       userCode: user.userCode,
       verifyCode: user.verifyCode,
+    });
+  }
+
+  forgotPassWord(user: any): Observable<any> {
+    return this._api.postTypeRequest('users/forget-password', {
+      email: user.email,
+    });
+  }
+
+  updatePassWord(user: any): Observable<any> {
+    return this._api.putTypeRequest('users/update-password', {
+      email: user.email,
+      verifyCode: user.verifyCode,
+      password: user.password
     });
   }
 

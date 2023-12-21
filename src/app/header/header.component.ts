@@ -68,6 +68,7 @@ export class HeaderComponent implements OnInit {
         }
       },
       (err) => {
+        this.total = 0
       }
     )
   }

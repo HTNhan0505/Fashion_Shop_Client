@@ -23,7 +23,7 @@
         alt=""
       />
     </div>
-    <form #registerForm="ngForm" (ngSubmit)="onSubmit()">
+    <form #registerForm="ngForm" (ngSubmit)="onSubmit()" *ngIf="userCode">
       <h3>Verify Form</h3>
       <div class="form-wrapper">
         <input
@@ -33,6 +33,55 @@
           class="form-control"
           [(ngModel)]="verifyCode"
           placeholder="OTP"
+        />
+      </div>
+
+      <div class="form-wrapper">
+        <button
+          nz-button
+          type="submit"
+          [disabled]="!canSubmit()"
+          [nzLoading]="loading"
+        >
+          Verify
+        </button>
+      </div>
+      <div class="form-wrapper mt-30">
+        <a class="navigate-link" routerLink="/login"
+          >Sign in with an existing user</a
+        >
+      </div>
+    </form>
+    <form #registerForm="ngForm" (ngSubmit)="onSubmit()" *ngIf="emailUser">
+      <h3>Verify Form</h3>
+      <div class="form-wrapper">
+        <input
+          nz-input
+          type="text"
+          name="verifyCode"
+          class="form-control"
+          [(ngModel)]="verifyCode"
+          placeholder="OTP"
+        />
+      </div>
+      <div class="form-wrapper">
+        <input
+          nz-input
+          type="password"
+          name="password"
+          class="form-control"
+          [(ngModel)]="password"
+          placeholder="New Password"
+        />
+      </div>
+      <div class="form-wrapper">
+        <input
+          nz-input
+          type="password"
+          name="confirmPassword"
+          class="form-control"
+          [(ngModel)]="confirmPassword"
+          placeholder="Confirm Password"
         />
       </div>
 
