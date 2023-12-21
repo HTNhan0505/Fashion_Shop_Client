@@ -34,29 +34,29 @@ export class CheckoutComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
-  submitCheckout() {
-    this.loading = true;
-    setTimeout(() => {
-      this._cart
-        .submitCheckout(this.currentUser.user_id, this.cartData)
-        .subscribe(
-          (res: any) => {
-            console.log(res);
-            this.loading = false;
-            this.orderId = res.orderId;
-            this.products = res.products;
-            this.currentStep = 4;
-            this._cart.clearCart();
-          },
-          (err) => {
-            console.log(err);
-            this.loading = false;
-          }
-        );
-    }, 750);
-  }
+  // submitCheckout() {
+  //   this.loading = true;
+  //   setTimeout(() => {
+  //     this._cart
+  //       .submitCheckout(this.currentUser.user_id, this.cartData)
+  //       .subscribe(
+  //         (res: any) => {
+  //           console.log(res);
+  //           this.loading = false;
+  //           this.orderId = res.orderId;
+  //           this.products = res.products;
+  //           this.currentStep = 4;
+  //           this._cart.clearCart();
+  //         },
+  //         (err) => {
+  //           console.log(err);
+  //           this.loading = false;
+  //         }
+  //       );
+  //   }, 750);
+  // }
 
   getProgressPrecent() {
     return (this.currentStep / 4) * 100;

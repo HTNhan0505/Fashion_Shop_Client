@@ -98,7 +98,7 @@ export class ProfileComponent implements OnInit {
     this.alertVisible = false;
     this.loading = true;
     this._api
-      .putTypeRequest('users/cart/update', {
+      .putTypeRequest('users/update-user', {
         first_name: this.user[0].value,
         last_name: this.user[1].value,
         email: this.user[2].value,
@@ -108,19 +108,14 @@ export class ProfileComponent implements OnInit {
       })
       .subscribe(
         (res: any) => {
-          console.log("success")
+          // console.log("success")
           this.alertMessage = 'success';
           this.alertType = 'success';
           this.alertVisible = true;
           this.loading = false;
-          // const oldDetails = this._token.getUser();
-          // this._token.setUser({
-          //   ...oldDetails,
-          //   fname: this.user[0].value,
-          //   email: this.user[1].value,
-          // });
-          // this.user[2].value = '';
-          // this.user[3].value = '';
+
+
+          // this.getUser()
         },
         (err: any) => {
 

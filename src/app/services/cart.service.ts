@@ -30,10 +30,13 @@ export class CartService {
     this.cartDataObs$.next(this.cartData);
   }
 
-  submitCheckout(userId, cart) {
-    return this._api.postTypeRequest('orders/create', {
-      userId: userId,
-      cart: cart,
+  submitCheckout(Id, cartItems, address, totalPice, total) {
+    return this._api.postTypeRequest('users/checkout', {
+      cartID: Id,
+      items: cartItems,
+      address: address,
+      totalPice: totalPice,
+      total: total
     });
   }
 
@@ -90,6 +93,7 @@ export class CartService {
   getTotalCart() {
     return this._api.getTypeRequest('users/cart');
   }
+
 
   updateCart(id: string, quantity: number): Observable<any> {
     return this._api.putTypeRequest('users/cart/update', {
