@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CartService } from '../services/cart.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ShareService } from '../services/share.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-cart',
@@ -33,7 +34,8 @@ export class CartComponent implements OnInit {
   constructor(
     private _cart: CartService,
     private _notification: NzNotificationService,
-    private _share: ShareService
+    private _share: ShareService,
+    private _auth: AuthService,
   ) {
     this._cart.cartDataObs$.subscribe((cartData) => {
       this.cartData = cartData;
@@ -42,53 +44,9 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCart();
+    this.getUser()
   }
 
-  getProvince() {
-    this._cart.getProvinces().subscribe(
-      (data: any) => {
-        this.provinces = data.data;
-        for (let prov of this.provinces) {
-          if (prov.ProvinceID == this.province) {
-            this.nameProvince = prov.ProvinceName;
-          }
-        }
-      },
-      (error) => { }
-    );
-  }
-  getDistrict() {
-    this._cart.getCities(parseInt(this.province)).subscribe(
-      (data: any) => {
-        this.cities = data.data;
-        for (let city of this.cities) {
-          if (city.ProvinceID == this.province) {
-            this.nameDistrict = city.DistrictName;
-          }
-        }
-      },
-      (error) => { }
-    );
-  }
-  getWard() {
-    this._cart.getWard(parseInt(this.district)).subscribe(
-      (data: any) => {
-        this.wards = data.data;
-        for (let ward of this.wards) {
-          if (ward.DistrictID == this.district) {
-            this.nameWard = ward.WardName;
-            this.nameLocal =
-              this.nameProvince +
-              ', ' +
-              this.nameDistrict +
-              ', ' +
-              this.nameWard;
-          }
-        }
-      },
-      (error) => { }
-    );
-  }
 
   checkoutItem() {
     this._cart
@@ -108,6 +66,7 @@ export class CartComponent implements OnInit {
             { nzPlacement: 'bottomLeft' }
           );
           this.getCart()
+          this._share.sendClickEvent();
         },
         (err) => { }
       );
@@ -159,18 +118,77 @@ export class CartComponent implements OnInit {
 
           this.totalAmount = res.total_price;
 
-          this.province = res.province;
-          this.district = res.district;
-          this.ward = res.ward;
-
-          this.getProvince();
-          this.getDistrict();
-          this.getWard();
-
           this._share.sendClickEvent();
         }
       },
       (err) => { }
     );
   }
+
+  // Get user
+  getUser() {
+    this._auth.getProfileUser().subscribe(
+      (res: any) => {
+
+        this.province = res.province;
+        this.district = res.district;
+        this.ward = res.ward;
+
+
+        this.getProvince(res.province, res.district, res.ward)
+
+      },
+      (err) => {
+      }
+    )
+  }
+
+
+  getProvince(id, district, wardCode) {
+    this._cart.getProvinces().subscribe(
+      (data: any) => {
+        this.provinces = data.data;
+        for (let prov of this.provinces) {
+          if (prov.ProvinceID == id) {
+
+
+            this.nameProvince = prov.ProvinceName;
+          }
+        }
+        this._cart.getCities(parseInt(id)).subscribe(
+          (data: any) => {
+            this.cities = data.data;
+            for (let city of this.cities) {
+              if (city.DistrictID == parseInt(district)) {
+
+                this.nameDistrict = city.DistrictName;
+              }
+            }
+
+            this._cart.getWard(parseInt(district)).subscribe(
+              (data: any) => {
+                this.wards = data.data;
+                for (let ward of this.wards) {
+                  if (ward.WardCode == wardCode) {
+                    this.nameWard = ward.WardName;
+                  }
+                }
+                this.nameLocal =
+                  this.nameProvince +
+                  ', ' +
+                  this.nameDistrict +
+                  ', ' +
+                  this.nameWard;
+              },
+              (error) => { }
+            );
+
+          },
+          (error) => { }
+        );
+      },
+      (error) => { }
+    );
+  }
+
 }
