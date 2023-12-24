@@ -39,4 +39,8 @@ export class ProductService {
     // console.log(id);
     return this._api.getTypeRequest('users/product/' + id);
   }
+  searchProducts(pageNumber: number, pageSize: number, keyword: string) {
+    const url = `${this.apiUrlMain}users/product?offset=${pageNumber}&limit=${pageSize}&text=${keyword}`;
+    return this.http.get<any>(url);
+  }
 }

@@ -41,21 +41,27 @@ export class OrderHistoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getOrder()
+  }
+  getOrder() {
     this._api.getTypeRequest('users/orders').subscribe(
       (res: any) => {
         console.log(res);
-        // res.data.forEach((item) => {
-        //   this._product
-        //     .getSingleProduct(item.product_id)
-        //     .subscribe((product) => {
-        //       console.log(product);
-        //       this.orders.push({ ...product, ...item });
-        //     });
-        // });
+        this.orders = res.data
       },
       (err) => {
         this.error = err.error.message;
       }
     );
+  }
+
+  cancelOrder(id: any, status: any) {
+    this._api.putTypeRequest('users/orders/cancel/' + id, null).subscribe((res) => {
+      console.log('Order canceled successfully');
+    }, (error) => {
+      console.error('Failed to cancel order:', error);
+    })
+    this.getOrder()
+    // console.log(id)
   }
 }

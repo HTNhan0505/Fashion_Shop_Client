@@ -6,6 +6,8 @@ import { TokenStorageService } from '../services/token-storage.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ShareService } from '../services/share.service';
+import { ProductService } from '../services/product.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -20,6 +22,7 @@ export class HeaderComponent implements OnInit {
   isMobile = false;
   isLoggedIn = false;
   dropdownVisible = false;
+  keyWord: string
   // cartData: any;
   total: any
 
@@ -37,7 +40,9 @@ export class HeaderComponent implements OnInit {
     private _auth: AuthService,
     private _cart: CartService,
     private _router: Router,
-    private _share: ShareService
+    private _share: ShareService,
+
+
   ) {
     this.getScreenSize();
     this._auth.user.subscribe((user) => {
@@ -55,7 +60,7 @@ export class HeaderComponent implements OnInit {
     else this.isLoggedIn = false;
     this.getCart()
 
-    // console.log("Init")
+
   }
 
   getCart() {
@@ -88,5 +93,18 @@ export class HeaderComponent implements OnInit {
   logout() {
     this._auth.logout();
     this.isMenuOpen = false;
+  }
+
+
+  searchData() {
+    if (this.keyWord) {
+      this._router.navigate([`product-category/${this.keyWord}`]);
+    } else {
+      this._router.navigate(['/']);
+
+    }
+    // this._prod.searchProducts(0, 5, this.keyWord).subscribe((response: any) => {
+    //   console.log(response)
+    // });
   }
 }
