@@ -11,6 +11,7 @@ import { RegisterComponent } from './auth/components/register/register.component
 import { AuthGuardService } from './guards/auth-guard.service';
 import { VerifyComponent } from './auth/components/verify/verify.component';
 import { ProdCategoryComponent } from './prod-category/prod-category.component';
+import { CheckoutOrderComponent } from './checkout-order/checkout-order.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -37,6 +38,10 @@ const routes: Routes = [
   {
     path: 'product-category/:query',
     component: ProdCategoryComponent,
+  },
+  {
+    path: 'order',
+    component: CheckoutOrderComponent,
   },
 ];
 

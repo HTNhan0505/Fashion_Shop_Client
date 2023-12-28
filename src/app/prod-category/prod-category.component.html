@@ -14,6 +14,9 @@
       </ng-template>
       <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
     </div>
+    <div *ngIf="checkProduct" class="products__loading">
+      <h3>This Product not have in database</h3>
+    </div>
     <div class="products__list" *ngIf="!loading">
       <app-product-card
         *ngFor="let n of products"

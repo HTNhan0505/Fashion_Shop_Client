@@ -35,7 +35,13 @@
       />
     </nz-input-group>
     <ng-template #suffixIconButton>
-      <button (click)="searchData()" nz-button nzType="primary" nzSearch>
+      <button
+        (click)="searchData()"
+        nz-button
+        nzType="primary"
+        nzSearch
+        style="display: flex; align-items: center"
+      >
         <span nz-icon nzType="search"></span>
       </button>
     </ng-template>

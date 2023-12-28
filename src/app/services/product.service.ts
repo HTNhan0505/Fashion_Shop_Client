@@ -9,7 +9,7 @@ import { ApiService } from './api.service';
   providedIn: 'root',
 })
 export class ProductService {
-  private url = environment.apiUrl;
+  // private url = environment.apiUrl;
   // private apiUrlAdmin = environment.apiUrlAdmin;
   private apiUrlMain = environment.apiUrlMain;
 
@@ -17,14 +17,14 @@ export class ProductService {
 
   constructor(private http: HttpClient, private _api: ApiService) { }
 
-  getAllProducts(limitOfResults = 9, page): Observable<Products> {
-    return this.http.get<Products>(this.url + 'products', {
-      params: {
-        limit: limitOfResults.toString(),
-        page: page,
-      },
-    });
-  }
+  // getAllProducts(limitOfResults = 9, page): Observable<Products> {
+  //   return this.http.get<Products>(this.url + 'products', {
+  //     params: {
+  //       limit: limitOfResults.toString(),
+  //       page: page,
+  //     },
+  //   });
+  // }
 
   getProductList(pageNumber: number, pageSize: number): Observable<any> {
     const url = `${this.apiUrlMain}users/product/list?offset=${pageNumber}&limit=${pageSize}`;
@@ -32,7 +32,7 @@ export class ProductService {
   }
 
   getCategoryList(): Observable<any> {
-    return this.http.get('http://localhost:3000/users/get-category/list');
+    return this.http.get('https://blawol.onrender.com/users/get-category/list');
   }
 
   getSingleProduct(id: any): Observable<any> {

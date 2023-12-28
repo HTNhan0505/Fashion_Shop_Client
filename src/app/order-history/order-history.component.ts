@@ -32,6 +32,7 @@ export class OrderHistoryComponent implements OnInit {
   user: any;
   orders: any[] = [];
   error = '';
+  isDisabled: boolean = false
   constructor(
     private _api: ApiService,
     private _auth: AuthService,
@@ -55,8 +56,9 @@ export class OrderHistoryComponent implements OnInit {
     );
   }
 
-  cancelOrder(id: any, status: any) {
+  cancelOrder(id: any) {
     this._api.putTypeRequest('users/orders/cancel/' + id, null).subscribe((res) => {
+      this.isDisabled = true
       console.log('Order canceled successfully');
     }, (error) => {
       console.error('Failed to cancel order:', error);

@@ -20,7 +20,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let order of orders; index as i">
+        <tr *ngFor="let order of orders; index as i" style="cursor: pointer">
           <td>{{ i + 1 }}</td>
           <td>{{ order.address }}</td>
           <td [ngClass]="order.status">{{ order.status }}</td>
@@ -28,11 +28,13 @@
             <strong> {{ order.price | currency : "VND" }} </strong>
           </td>
           <button
-            class="button-29"
-            role="button"
-            (click)="cancelOrder(order.orderID, order.status)"
+            nz-button
+            type="submit"
+            [nzLoading]="loading"
+            [disabled]="order.status == 'CANCELED'"
+            (click)="cancelOrder(order.orderID)"
           >
-            {{ order.status == "SUCCESS" ? "Cancel" : "Re-Order" }}
+            Cancel
           </button>
         </tr>
       </tbody>

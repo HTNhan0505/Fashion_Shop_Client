@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:5000/api/v1/',
-  apiUrlMain: 'http://localhost:3000/',
-  apiUrlAdmin: 'http://localhost:3000/admin/',
+  // apiUrl: 'http://localhost:5000/api/v1/',
+  apiUrlMain: 'https://blawol.onrender.com/',
+  apiUrlAdmin: 'https://blawol.onrender.com/admin/',
 };
 
 /*

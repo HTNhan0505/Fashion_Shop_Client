@@ -37,6 +37,7 @@ import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { ProdCategoryComponent } from './prod-category/prod-category.component';
+import { CheckoutOrderComponent } from './checkout-order/checkout-order.component';
 
 registerLocaleData(en);
 
@@ -55,7 +56,8 @@ registerLocaleData(en);
     FooterComponent,
     ProductCardComponent,
     VerifyComponent,
-    ProdCategoryComponent
+    ProdCategoryComponent,
+    CheckoutOrderComponent
   ],
   imports: [
     BrowserModule,
