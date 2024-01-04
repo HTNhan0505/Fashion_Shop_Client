@@ -3,6 +3,7 @@ import { CartService } from '../services/cart.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ShareService } from '../services/share.service';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -36,6 +37,7 @@ export class CartComponent implements OnInit {
     private _notification: NzNotificationService,
     private _share: ShareService,
     private _auth: AuthService,
+    private _route: Router
   ) {
     this._cart.cartDataObs$.subscribe((cartData) => {
       this.cartData = cartData;
@@ -49,27 +51,28 @@ export class CartComponent implements OnInit {
 
 
   checkoutItem() {
-    this._cart
-      .submitCheckout(
-        this.cartID,
-        this.products,
-        this.nameLocal,
-        this.totalAmount,
-        this.total
-      )
-      .subscribe(
-        (res: any) => {
-          this._notification.create(
-            'success',
-            'successfully',
-            'Check out successfully',
-            { nzPlacement: 'bottomLeft' }
-          );
-          this.getCart()
-          this._share.sendClickEvent();
-        },
-        (err) => { }
-      );
+    this._route.navigate(['/order'])
+    // this._cart
+    //   .submitCheckout(
+    //     this.cartID,
+    //     this.products,
+    //     this.nameLocal,
+    //     this.totalAmount,
+    //     this.total
+    //   )
+    //   .subscribe(
+    //     (res: any) => {
+    //       this._notification.create(
+    //         'success',
+    //         'successfully',
+    //         'Check out successfully',
+    //         { nzPlacement: 'bottomLeft' }
+    //       );
+    //       this.getCart()
+    //       this._share.sendClickEvent();
+    //     },
+    //     (err) => { }
+    //   );
   }
 
   updateCart(id: string, quantity: any): void {
@@ -143,7 +146,7 @@ export class CartComponent implements OnInit {
     )
   }
 
-
+  // Get location district , city , ....
   getProvince(id, district, wardCode) {
     this._cart.getProvinces().subscribe(
       (data: any) => {

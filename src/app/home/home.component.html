@@ -34,27 +34,6 @@
         </div>
       </div>
     </div>
-
-    <!-- <a
-      class="carousel-control-prev"
-      role="button"
-      data-slide="prev"
-      style="margin-left: 50px"
-      (click)="prevSlide()"
-    >
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a
-      class="carousel-control-next"
-      role="button"
-      data-slide="next"
-      style="margin-right: 50px"
-      (click)="nextSlide()"
-    >
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a> -->
   </div>
 
   <!-- Categories -->
@@ -63,8 +42,12 @@
       <h2>Categories</h2>
     </div>
     <div class="Items">
-      <div class="Item" *ngFor="let c of categories">
-        <a href="" class="Item__link">
+      <div
+        class="Item"
+        *ngFor="let c of categories"
+        (click)="handleGetProductByCategory(c.categoryId)"
+      >
+        <a class="Item__link">
           <div class="Item__title">{{ c.name }}</div>
         </a>
       </div>
@@ -74,7 +57,7 @@
   <!-- Product -->
   <div class="products">
     <div class="products__header">
-      <h2>Recommend</h2>
+      <h2>Product</h2>
     </div>
     <div *ngIf="loading" class="products__loading">
       <ng-template #indicatorTemplate>
@@ -109,5 +92,10 @@
     >
       Show more
     </button>
+    <!-- <nz-pagination
+      (nzPageIndexChange)="loadProduct()"
+      [nzPageIndex]="1"
+      [nzTotal]="50"
+    ></nz-pagination> -->
   </div>
 </div>

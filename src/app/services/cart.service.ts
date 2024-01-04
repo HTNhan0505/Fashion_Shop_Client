@@ -30,13 +30,14 @@ export class CartService {
     this.cartDataObs$.next(this.cartData);
   }
 
-  submitCheckout(Id, cartItems, address, totalPice, total) {
+  submitCheckout(Id, cartItems, address, totalPice, total, shipFee) {
     return this._api.postTypeRequest('users/checkout', {
       cartID: Id,
       items: cartItems,
       address: address,
       totalPice: totalPice,
-      total: total
+      total: total,
+      shipFee: shipFee
     });
   }
 
@@ -173,4 +174,7 @@ export class CartService {
     return this.http.post('https://online-gateway.ghn.vn/shiip/public-api/master-data/ward', body, { headers });
   }
 
+  getRawOrder() {
+    return this._api.getTypeRequest('users/orders/get-raw-order')
+  }
 }

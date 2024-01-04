@@ -38,6 +38,9 @@ import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { ProdCategoryComponent } from './prod-category/prod-category.component';
 import { CheckoutOrderComponent } from './checkout-order/checkout-order.component';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { SingleHistoryComponent } from './single-history/single-history.component';
+import { CategoryComponent } from './category/category.component';
 
 registerLocaleData(en);
 
@@ -57,7 +60,9 @@ registerLocaleData(en);
     ProductCardComponent,
     VerifyComponent,
     ProdCategoryComponent,
-    CheckoutOrderComponent
+    CheckoutOrderComponent,
+    SingleHistoryComponent,
+    CategoryComponent
   ],
   imports: [
     BrowserModule,
@@ -78,6 +83,7 @@ registerLocaleData(en);
     NzNotificationModule,
     NzProgressModule,
     NzTableModule,
+    NzPaginationModule
   ],
   providers: [
     authInterceptorProviders,

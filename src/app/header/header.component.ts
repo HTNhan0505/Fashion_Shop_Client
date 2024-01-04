@@ -99,12 +99,8 @@ export class HeaderComponent implements OnInit {
   searchData() {
     if (this.keyWord) {
       this._router.navigate([`product-category/${this.keyWord}`]);
-      // this.keyWord = ''
     } else {
       this._router.navigate(['/']);
     }
-    // this._prod.searchProducts(0, 5, this.keyWord).subscribe((response: any) => {
-    //   console.log(response)
-    // });
   }
 }

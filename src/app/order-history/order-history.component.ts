@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { AuthService } from '../services/auth.service';
 import { ProductService } from '../services/product.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-order-history',
@@ -9,26 +10,6 @@ import { ProductService } from '../services/product.service';
   styleUrls: ['./order-history.component.scss'],
 })
 export class OrderHistoryComponent implements OnInit {
-  listOfData: any[] = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park',
-    },
-  ];
   user: any;
   orders: any[] = [];
   error = '';
@@ -36,7 +17,8 @@ export class OrderHistoryComponent implements OnInit {
   constructor(
     private _api: ApiService,
     private _auth: AuthService,
-    private _product: ProductService
+    private _product: ProductService,
+    private _router: Router,
   ) {
     this.user = this._auth.getUser();
   }
@@ -47,7 +29,6 @@ export class OrderHistoryComponent implements OnInit {
   getOrder() {
     this._api.getTypeRequest('users/orders').subscribe(
       (res: any) => {
-        console.log(res);
         this.orders = res.data
       },
       (err) => {
@@ -64,6 +45,8 @@ export class OrderHistoryComponent implements OnInit {
       console.error('Failed to cancel order:', error);
     })
     this.getOrder()
-    // console.log(id)
+  }
+  handleSingleOrder(id) {
+    this._router.navigate([`history/${id}`]);
   }
 }

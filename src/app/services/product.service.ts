@@ -32,7 +32,7 @@ export class ProductService {
   }
 
   getCategoryList(): Observable<any> {
-    return this.http.get('https://blawol.onrender.com/users/get-category/list');
+    return this.http.get('http://localhost:3000/users/get-category/list');
   }
 
   getSingleProduct(id: any): Observable<any> {
@@ -41,6 +41,14 @@ export class ProductService {
   }
   searchProducts(pageNumber: number, pageSize: number, keyword: string) {
     const url = `${this.apiUrlMain}users/product?offset=${pageNumber}&limit=${pageSize}&text=${keyword}`;
+    return this.http.get<any>(url);
+  }
+  getSingleOrder(id: any) {
+    const url = `${this.apiUrlMain}users/orders/get-single?orderId=${id}`;
+    return this.http.get<any>(url);
+  }
+  getProductByCategory(id: any, pageNumber: number, pageSize: number,) {
+    const url = `${this.apiUrlMain}users/product-by-category?categoryId=${id}&offset=${pageNumber}&limit=${pageSize}`;
     return this.http.get<any>(url);
   }
 }

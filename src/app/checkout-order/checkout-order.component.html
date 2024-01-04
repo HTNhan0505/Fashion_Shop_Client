@@ -1,1 +1,68 @@
-<p>checkout-order works!</p>
+<div class="cart-container">
+  <div class="cart-container__empty" *ngIf="total === 0">
+    Your cart is empty.
+  </div>
+  <div class="cart-container__list" *ngIf="total > 0">
+    <header class="list-header">
+      <h2>Orders</h2>
+    </header>
+    <div
+      class="list-item"
+      *ngFor="let product of products; index as i"
+      [ngStyle]="{ border: i === products.length - 1 && 'none' }"
+    >
+      <div class="list-item__image">
+        <img [src]="product.listImage[0]" alt="" />
+      </div>
+      <div class="list-item__details">
+        <div class="title">{{ product.productName }}</div>
+        <div class="price">{{ product.price | currency : "VND" }}</div>
+        <div class="price">Quantity : {{ product.itemQuantity }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="cart-container__total">
+    <div class="price">
+      <!-- Total item -->
+      <span>
+        <p class="mb-0">Total items :</p>
+        <p class="mb-0" style="margin-left: 20px">{{ total }}</p>
+      </span>
+      <!-- Local -->
+      <span>
+        <p style="margin-bottom: 0">
+          {{ nameLocal }}
+        </p>
+      </span>
+      <!-- Price shipment -->
+      <span>
+        <p class="mb-0">Shipment :</p>
+        <p class="mb-0" style="margin-left: 20px">
+          {{ shipFee | currency : "VND" }}
+        </p>
+      </span>
+      <!-- Estimated day -->
+      <span>
+        <p class="mb-0">Estimated day :</p>
+        <p class="mb-0" style="margin-left: 20px">{{ total }}</p>
+      </span>
+
+      <span>
+        <h3>Total amount</h3>
+        <h2>{{ (!totalAmount ? 0 : totalAmount) | currency : "VND" }}</h2></span
+      >
+    </div>
+
+    <div class="cta">
+      <button
+        nz-button
+        nzType="primary"
+        (click)="checkoutItem()"
+        [disabled]="total === 0"
+      >
+        Order
+      </button>
+      <button nz-button routerLink="/cart">Cancel</button>
+    </div>
+  </div>
+</div>

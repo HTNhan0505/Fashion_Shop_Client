@@ -10,6 +10,7 @@ import { Products, Product } from '../shared/models/product.model';
 import { TokenStorageService } from '../services/token-storage.service';
 import { ShareService } from '../services/share.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -56,7 +57,8 @@ export class HomeComponent implements OnInit {
     private cartService: CartService,
     private _token: TokenStorageService,
     private _cart: CartService,
-    private _share: ShareService
+    private _share: ShareService,
+    private _router: Router,
   ) {
 
   }
@@ -82,6 +84,7 @@ export class HomeComponent implements OnInit {
     setTimeout(() => {
       this.productService.getCategoryList().subscribe(
         (res: any) => {
+          // console.log(res.data)
           this.categories = res.data
           this.loading = false;
         },
@@ -97,13 +100,11 @@ export class HomeComponent implements OnInit {
   getProduct() {
     this.productService.getProductList(this.pageNumber, this.pageSize).subscribe(
       (res: any) => {
-        // console.log("data", res)
         this.products = [...this.products, ...res.data];
         this.additionalLoading = false;
         this.total = Math.ceil(res.total / this.pageSize)
       },
       (err) => {
-        // console.log(err);
         this.additionalLoading = false;
       }
     );
@@ -142,5 +143,12 @@ export class HomeComponent implements OnInit {
         this.slideIndex = this.slideIndex + 1
       }
     }, 3000);
+  }
+  // loadProduct
+  loadProduct() {
+    // console.log("")
+  }
+  handleGetProductByCategory(id: any) {
+    this._router.navigate([`category/${id}`]);
   }
 }

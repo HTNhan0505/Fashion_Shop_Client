@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../services/product.service';
 import { map } from 'rxjs/operators';
 
+import { Products, Product } from '../shared/models/product.model';
 
 import { CartService } from '../services/cart.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
@@ -21,6 +22,11 @@ export class ProductComponent implements OnInit {
   loading = false;
   imgs: any;
   imgBtns: any
+  products: Product[] = [];
+  pageNumber = 0;
+  pageSize = 4;
+  total = 0
+
 
   constructor(
     private _route: ActivatedRoute,
@@ -38,6 +44,7 @@ export class ProductComponent implements OnInit {
 
     this.loading = true;
     this.getSingleProduct()
+    this.getProduct()
   }
 
   changeSlide(id: any) {
@@ -88,5 +95,23 @@ export class ProductComponent implements OnInit {
         console.error('Add to cart failed', error);
       }
     );;
+  }
+  // Lấy product theo offset và limit
+  getProduct() {
+    this._product.getProductList(this.pageNumber, this.pageSize).subscribe(
+      (res: any) => {
+        this.products = [...this.products, ...res.data];
+        this.total = Math.ceil(res.total / this.pageSize)
+      },
+      (err) => {
+        // console.log(err);
+      }
+    );
+
+  }
+  // Hàm này handle cho nút show more sẽ tăng offset thêm 1
+  showMoreProducts(): void {
+    this.pageNumber++;
+    this.getProduct()
   }
 }

@@ -44,7 +44,6 @@ export class ProdCategoryComponent implements OnInit {
         this.loading = false;
 
       }
-      // this.loading = false;
     })
 
   }

@@ -11,31 +11,35 @@
       <thead>
         <tr>
           <th>No</th>
-          <!-- <th>Customer <span class="icon-arrow"></span></th> -->
           <th>Location <span class="icon-arrow"></span></th>
-          <!-- <th>Order Date <span class="icon-arrow"></span></th> -->
           <th>Status</th>
           <th>Amount</th>
-          <th>Action</th>
+          <th style="z-index: 999">Action</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let order of orders; index as i" style="cursor: pointer">
+        <tr
+          *ngFor="let order of orders; index as i"
+          style="cursor: pointer"
+          (click)="handleSingleOrder(order.orderID)"
+        >
           <td>{{ i + 1 }}</td>
           <td>{{ order.address }}</td>
           <td [ngClass]="order.status">{{ order.status }}</td>
           <td>
             <strong> {{ order.price | currency : "VND" }} </strong>
           </td>
-          <button
-            nz-button
-            type="submit"
-            [nzLoading]="loading"
-            [disabled]="order.status == 'CANCELED'"
-            (click)="cancelOrder(order.orderID)"
-          >
-            Cancel
-          </button>
+          <td>
+            <button
+              nz-button
+              type="submit"
+              [nzLoading]="loading"
+              [disabled]="order.status == 'CANCELED'"
+              (click)="cancelOrder(order.orderID)"
+            >
+              Cancel
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>

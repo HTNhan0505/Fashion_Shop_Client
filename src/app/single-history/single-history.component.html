@@ -1,0 +1,48 @@
+<main
+  class="table"
+  id="customers_table"
+  style="background-image: url('../../../../assets/bg-registration-form-1.jpg')"
+>
+  <section class="table__header">
+    <h1>History Orders</h1>
+    <div class="input-group">
+      <span style="font-size: 22px; font-weight: 700"
+        >Total : {{ total | currency : "VND" }}</span
+      >
+      <!-- <span>{{ total }}</span> -->
+    </div>
+  </section>
+  <section class="table__body">
+    <table>
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Image</th>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders; index as i" style="cursor: pointer">
+          <td>{{ i + 1 }}</td>
+          <td><img src="{{ order.listImage[0] }}" alt="" /></td>
+          <td>{{ order.productName }}</td>
+          <td>{{ order.itemQuantity }}</td>
+          <td>
+            <strong> {{ order.price | currency : "VND" }} </strong>
+          </td>
+          <!-- <button
+            nz-button
+            type="submit"
+            [nzLoading]="loading"
+            [disabled]="order.status == 'CANCELED'"
+            (click)="cancelOrder(order.orderID)"
+          >
+            Cancel
+          </button> -->
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</main>

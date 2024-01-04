@@ -1,0 +1,45 @@
+<div class="home-container">
+  <!-- Product -->
+  <div class="products">
+    <div class="products__header">
+      <h2>Product</h2>
+    </div>
+
+    <div *ngIf="loading" class="products__loading">
+      <ng-template #indicatorTemplate>
+        <i
+          nz-icon
+          nzType="loading"
+          [ngStyle]="{ 'font-size': '2rem', margin: '0 auto' }"
+        ></i>
+      </ng-template>
+      <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
+    </div>
+
+    <div *ngIf="checkProduct" class="products__loading">
+      <h3>Sorry list product of this category can out stock</h3>
+    </div>
+    <div class="products__list" *ngIf="!loading">
+      <app-product-card
+        *ngFor="let n of products"
+        [id]="n.productId"
+        [title]="n.productName"
+        [image]="n.listImage"
+        [price]="n.price"
+        [short_desc]="n.detail"
+        [category]="n.categoryName"
+        [quantity]="n.quantity"
+      >
+      </app-product-card>
+    </div>
+  </div>
+  <div class="load-products" *ngIf="pageNumber + 1 < total">
+    <button
+      nz-button
+      (click)="showMoreProducts()"
+      [nzLoading]="additionalLoading"
+    >
+      Show more
+    </button>
+  </div>
+</div>
