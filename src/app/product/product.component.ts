@@ -8,6 +8,7 @@ import { Products, Product } from '../shared/models/product.model';
 import { CartService } from '../services/cart.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ShareService } from '../services/share.service';
+import { FeedbackService } from '../services/feedback.service';
 
 @Component({
   selector: 'app-product',
@@ -26,6 +27,13 @@ export class ProductComponent implements OnInit {
   pageNumber = 0;
   pageSize = 4;
   total = 0
+  idFeedback: any
+  dataFeedback: any
+  userFeedback: any
+
+  currentPage = 0;
+  totalPages = 0;
+  feedbackSize = 5;
 
 
   constructor(
@@ -33,7 +41,8 @@ export class ProductComponent implements OnInit {
     private _product: ProductService,
     private _cart: CartService,
     private _notification: NzNotificationService,
-    private _share: ShareService
+    private _share: ShareService,
+    private _feedback: FeedbackService
   ) { }
 
   ngOnInit(): void {
@@ -41,10 +50,10 @@ export class ProductComponent implements OnInit {
     this.imgBtns = [...this.imgs];
 
 
-
     this.loading = true;
     this.getSingleProduct()
     this.getProduct()
+    this.getFeedback()
   }
 
   changeSlide(id: any) {
@@ -113,5 +122,37 @@ export class ProductComponent implements OnInit {
   showMoreProducts(): void {
     this.pageNumber++;
     this.getProduct()
+  }
+
+  getFeedback() {
+    this._route.paramMap
+      .pipe(
+        map((param: any) => {
+          return param.params.id;
+        })
+      )
+      .subscribe((productId) => {
+        this._feedback.getFeedback(productId, this.currentPage, this.feedbackSize).subscribe((fb) => {
+          this.dataFeedback = fb.data
+          this.totalPages = Math.ceil(fb.total / this.feedbackSize);
+          console.log("Page ", this.totalPages)
+
+          this.loading = false;
+        });
+      });
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+      this.getFeedback();
+    }
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.getFeedback();
+    }
   }
 }

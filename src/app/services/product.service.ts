@@ -36,7 +36,6 @@ export class ProductService {
   }
 
   getSingleProduct(id: any): Observable<any> {
-    // console.log(id);
     return this._api.getTypeRequest('users/product/' + id);
   }
   searchProducts(pageNumber: number, pageSize: number, keyword: string) {

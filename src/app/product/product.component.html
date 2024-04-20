@@ -80,6 +80,86 @@
   </div>
 </div>
 
+<!-- Feedback Block -->
+<div class="home-container" *ngIf="dataFeedback != null">
+  <div class="products">
+    <div class="products__header">
+      <h2>Feedback</h2>
+    </div>
+
+    <div class="testimonial-box-container" *ngFor="let n of dataFeedback">
+      <!-- Member feedback -->
+      <div class="testimonial-box">
+        <!--top------------------------->
+        <div class="box-top">
+          <!--profile----->
+          <div class="profile">
+            <!--img---->
+            <div class="profile-img">
+              <img
+                src="https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg"
+              />
+            </div>
+            <!--name-and-username-->
+            <div class="name-user">
+              <strong>{{ n.user.first_name + n.user.last_name }}</strong>
+              <span>{{ n.user.email }}</span>
+            </div>
+          </div>
+          <!--reviews------>
+          <div class="reviews">
+            <i class="fas fa-star"></i>
+            <i
+              [ngClass]="
+                n.score <= 5 && n.score > 1 ? 'fas fa-star' : 'far fa-star'
+              "
+            ></i>
+            <i
+              [ngClass]="
+                n.score <= 5 && n.score >= 3 ? 'fas fa-star' : 'far fa-star'
+              "
+            ></i>
+            <i
+              [ngClass]="
+                n.score <= 5 && n.score >= 4 ? 'fas fa-star' : 'far fa-star'
+              "
+            ></i>
+            <i [ngClass]="n.score == 5 ? 'fas fa-star' : 'far fa-star'"></i>
+          </div>
+        </div>
+        <!--Comments---------------------------------------->
+        <div class="client-comment">
+          <p>
+            {{ n.content }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-box-container__pagination">
+      <button nz-button (click)="previousPage()" [disabled]="currentPage === 0">
+        Previous
+      </button>
+      <span> {{ currentPage != 0 ? "Page " + currentPage : "" }}</span>
+      <button
+        nz-button
+        (click)="nextPage()"
+        [disabled]="currentPage === totalPages - 1"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="home-container" *ngIf="dataFeedback === null">
+  <div class="products">
+    <div class="products__header">
+      <h2>The product has not yet been rated !!!!</h2>
+    </div>
+  </div>
+</div>
+
 <div class="home-container">
   <!-- Product -->
   <div class="products">
