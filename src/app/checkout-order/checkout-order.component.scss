@@ -113,7 +113,11 @@
         }
     }
 }
-
+.form-wrapper {
+    height: 48px;
+    width: 100%;
+    margin-bottom: 30px;
+}
 @media screen and (min-width: 1200px) {
     .cart-container {
         display: flex;

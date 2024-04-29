@@ -58,10 +58,17 @@
         nz-button
         nzType="primary"
         (click)="checkoutItem()"
-        [disabled]="total === 0"
+        [disabled]="total === 0 || !paymentMethod"
       >
         Order
       </button>
+      <div class="form-wrapper">
+        <p class="mb-0">Payment</p>
+        <select [(ngModel)]="paymentMethod" class="form-control" name="payment">
+          <option [value]="'COD'">COD</option>
+          <option [value]="'VNPAY'">VNpay</option>
+        </select>
+      </div>
       <button nz-button routerLink="/cart">Cancel</button>
     </div>
   </div>

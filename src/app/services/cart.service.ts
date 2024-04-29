@@ -30,14 +30,15 @@ export class CartService {
     this.cartDataObs$.next(this.cartData);
   }
 
-  submitCheckout(Id, cartItems, address, totalPice, total, shipFee) {
+  submitCheckout(Id, cartItems, address, totalPice, total, shipFee, method) {
     return this._api.postTypeRequest('users/checkout', {
       cartID: Id,
       items: cartItems,
       address: address,
       totalPice: totalPice,
       total: total,
-      shipFee: shipFee
+      shipFee: shipFee,
+      paymentMethod: method
     });
   }
 
@@ -176,5 +177,13 @@ export class CartService {
 
   getRawOrder() {
     return this._api.getTypeRequest('users/orders/get-raw-order')
+  }
+
+
+  paymentVNPay(order: any) {
+    return this._api.postTypeRequest('users/payment/vnpay', {
+      orderId: order.orderId,
+      amount: order.amount,
+    })
   }
 }

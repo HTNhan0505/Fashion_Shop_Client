@@ -21,6 +21,7 @@
           <th>Name</th>
           <th>Quantity</th>
           <th>Price</th>
+          <th *ngIf="statusOrder === 'SUCCESS'">Feedback</th>
         </tr>
       </thead>
       <tbody>
@@ -32,17 +33,21 @@
           <td>
             <strong> {{ order.price | currency : "VND" }} </strong>
           </td>
-          <!-- <button
-            nz-button
-            type="submit"
-            [nzLoading]="loading"
-            [disabled]="order.status == 'CANCELED'"
-            (click)="cancelOrder(order.orderID)"
-          >
-            Cancel
-          </button> -->
+          <td *ngIf="statusOrder === 'RECEIVED'">
+            <button
+              nz-button
+              type="submit"
+              [nzLoading]="loading"
+              style="margin: 0"
+              (click)="openDialog(order.productID)"
+              [disabled]="order.IsRate"
+            >
+              Feedback
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
   </section>
 </main>
+<app-dialog *ngIf="_dialog.showDialogFeedback"></app-dialog>

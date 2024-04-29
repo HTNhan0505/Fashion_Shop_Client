@@ -41,6 +41,9 @@ import { CheckoutOrderComponent } from './checkout-order/checkout-order.componen
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { SingleHistoryComponent } from './single-history/single-history.component';
 import { CategoryComponent } from './category/category.component';
+import { DialogComponent } from './dialog/dialog.component';
+import { ThankYouComponent } from './thank-you/thank-you.component';
+import { ConfirmBankingComponent } from './confirm-banking/confirm-banking.component';
 
 registerLocaleData(en);
 
@@ -62,7 +65,10 @@ registerLocaleData(en);
     ProdCategoryComponent,
     CheckoutOrderComponent,
     SingleHistoryComponent,
-    CategoryComponent
+    CategoryComponent,
+    DialogComponent,
+    ThankYouComponent,
+    ConfirmBankingComponent
   ],
   imports: [
     BrowserModule,

@@ -33,7 +33,7 @@ export class ProductComponent implements OnInit {
 
   currentPage = 0;
   totalPages = 0;
-  feedbackSize = 5;
+  feedbackSize = 4;
 
 
   constructor(
@@ -135,7 +135,6 @@ export class ProductComponent implements OnInit {
         this._feedback.getFeedback(productId, this.currentPage, this.feedbackSize).subscribe((fb) => {
           this.dataFeedback = fb.data
           this.totalPages = Math.ceil(fb.total / this.feedbackSize);
-          console.log("Page ", this.totalPages)
 
           this.loading = false;
         });

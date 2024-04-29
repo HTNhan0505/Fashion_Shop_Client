@@ -50,4 +50,5 @@ export class ProductService {
     const url = `${this.apiUrlMain}users/product-by-category?categoryId=${id}&offset=${pageNumber}&limit=${pageSize}`;
     return this.http.get<any>(url);
   }
+
 }

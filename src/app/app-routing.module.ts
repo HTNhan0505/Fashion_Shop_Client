@@ -14,6 +14,9 @@ import { ProdCategoryComponent } from './prod-category/prod-category.component';
 import { CheckoutOrderComponent } from './checkout-order/checkout-order.component';
 import { SingleHistoryComponent } from './single-history/single-history.component';
 import { CategoryComponent } from './category/category.component';
+import { DialogComponent } from './dialog/dialog.component';
+import { ThankYouComponent } from './thank-you/thank-you.component';
+import { ConfirmBankingComponent } from './confirm-banking/confirm-banking.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -52,6 +55,14 @@ const routes: Routes = [
   {
     path: 'order',
     component: CheckoutOrderComponent,
+  },
+  {
+    path: 'thankyou',
+    component: ThankYouComponent,
+  },
+  {
+    path: 'confirm-payment',
+    component: ConfirmBankingComponent,
   },
 ];
 

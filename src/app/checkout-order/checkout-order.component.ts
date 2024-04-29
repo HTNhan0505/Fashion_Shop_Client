@@ -4,7 +4,7 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ShareService } from '../services/share.service';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-
+import { DialogService } from '../services/dialog.service';
 
 @Component({
   selector: 'app-checkout-order',
@@ -34,12 +34,14 @@ export class CheckoutOrderComponent implements OnInit {
   shipFee: any
   products: any;
   total_price: any
+
+  paymentMethod: any = ""
   constructor(
     private _cart: CartService,
     private _notification: NzNotificationService,
     private _share: ShareService,
     private _auth: AuthService,
-    private _route: Router
+    private _route: Router,
   ) {
     this._cart.cartDataObs$.subscribe((cartData) => {
       this.cartData = cartData;
@@ -54,31 +56,66 @@ export class CheckoutOrderComponent implements OnInit {
 
 
   checkoutItem() {
-    this._cart
-      .submitCheckout(
-        this.cartID,
-        this.products,
-        this.nameLocal,
-        this.total_price,
-        this.total,
-        this.shipFee
-      )
-      .subscribe(
-        (res: any) => {
-          this._notification.create(
-            'success',
-            'successfully',
-            'Check out successfully',
-            { nzPlacement: 'bottomLeft' }
-          );
-          this._route.navigate(['/cart'])
-          this._share.sendClickEvent();
-        },
-        (err) => { }
-      );
+    if (this.paymentMethod == "COD") {
+      this._cart
+        .submitCheckout(
+          this.cartID,
+          this.products,
+          this.nameLocal,
+          this.total_price,
+          this.total,
+          this.shipFee,
+          "COD"
+        )
+        .subscribe(
+          (res: any) => {
+            this._notification.create(
+              'success',
+              'successfully',
+              'Check out successfully',
+              { nzPlacement: 'bottomLeft' }
+            );
+            this._route.navigate(['/thankyou'])
+            this._share.sendClickEvent();
+          },
+          (err) => { }
+        );
+    } else {
+      this._cart
+        .submitCheckout(
+          this.cartID,
+          this.products,
+          this.nameLocal,
+          this.total_price,
+          this.total,
+          this.shipFee,
+          "VNPAY"
+        )
+        .subscribe(
+          (res: any) => {
+            this._share.sendClickEvent();
+
+            const contentPayment = {
+              orderId: res.orderId,
+              amount: this.totalAmount + ''
+            }
+            this._cart.paymentVNPay(contentPayment).subscribe(
+              (response: any) => {
+                // Mở cửa sổ mới để thanh toán
+                window.open(response.url);
+                this._route.navigate(['/cart'])
+                // console.log(response)
+              }
+            )
+          },
+          (err) => { }
+        );
+
+
+    }
+
+
   }
-
-
   // Get user
   getUser() {
     this._auth.getProfileUser().subscribe(
@@ -152,7 +189,6 @@ export class CheckoutOrderComponent implements OnInit {
         this.products = res.data
         this.totalAmount = res.total_price + res.shipFee
         this.total_price = res.total_price
-        console.log(res)
       }
     )
   }
