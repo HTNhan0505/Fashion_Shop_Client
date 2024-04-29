@@ -183,7 +183,6 @@ export class CartService {
   paymentVNPay(order: any) {
     return this._api.postTypeRequest('users/payment/vnpay', {
       orderId: order.orderId,
-      amount: order.amount,
     })
   }
 }
