@@ -44,6 +44,7 @@ import { CategoryComponent } from './category/category.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { ThankYouComponent } from './thank-you/thank-you.component';
 import { ConfirmBankingComponent } from './confirm-banking/confirm-banking.component';
+import { ChatBoxComponent } from './chat-box/chat-box.component';
 
 registerLocaleData(en);
 
@@ -68,7 +69,8 @@ registerLocaleData(en);
     CategoryComponent,
     DialogComponent,
     ThankYouComponent,
-    ConfirmBankingComponent
+    ConfirmBankingComponent,
+    ChatBoxComponent
   ],
   imports: [
     BrowserModule,

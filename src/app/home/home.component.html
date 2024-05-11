@@ -35,25 +35,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Categories -->
-  <div class="categories">
-    <div class="categories__header">
-      <h2>Categories</h2>
-    </div>
-    <div class="Items">
-      <div
-        class="Item"
-        *ngFor="let c of categories"
-        (click)="handleGetProductByCategory(c.categoryId)"
-      >
-        <a class="Item__link">
-          <div class="Item__title">{{ c.name }}</div>
-        </a>
-      </div>
-    </div>
-  </div>
-
   <!-- Product -->
   <div class="products">
     <div class="products__header">

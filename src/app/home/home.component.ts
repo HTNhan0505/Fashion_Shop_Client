@@ -20,8 +20,6 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
   products: Product[] = [];
-  categories: any[] = [
-  ];
   banner: any[] = [
     {
       title: 'Áo Khoác Len Dáng Ngắn',
@@ -46,7 +44,7 @@ export class HomeComponent implements OnInit {
   ]
   loading = false;
   pageNumber = 0;
-  pageSize = 4;
+  pageSize = 12;
   total = 0
   productPageCounter = 1;
   additionalLoading = false;
@@ -79,20 +77,6 @@ export class HomeComponent implements OnInit {
     this.screenHeight = window.innerHeight;
     this.loading = true;
     this.getProduct()
-
-
-    setTimeout(() => {
-      this.productService.getCategoryList().subscribe(
-        (res: any) => {
-          // console.log(res.data)
-          this.categories = res.data
-          this.loading = false;
-        },
-        (err) => {
-          this.loading = false;
-        }
-      );
-    }, 500);
     this.changeSlide()
     this._share.sendClickEvent();
   }
@@ -100,6 +84,7 @@ export class HomeComponent implements OnInit {
   getProduct() {
     this.productService.getProductList(this.pageNumber, this.pageSize).subscribe(
       (res: any) => {
+        this.loading = false
         this.products = [...this.products, ...res.data];
         this.additionalLoading = false;
         this.total = Math.ceil(res.total / this.pageSize)

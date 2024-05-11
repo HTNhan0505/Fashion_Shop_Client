@@ -26,7 +26,6 @@ export class CategoryComponent implements OnInit {
 
   getProductByCategory(id: any) {
     this._product.getProductByCategory(id, this.pageNumber, this.pageSize).subscribe((result) => {
-      console.log(result)
       if (result.data) {
         this.products = [...this.products, ...result.data];
         this.total = Math.ceil(result.total / this.pageSize)
@@ -34,7 +33,6 @@ export class CategoryComponent implements OnInit {
         this.checkProduct = true
       }
       this.loading = false
-      // console.log(result)
     });
   }
 

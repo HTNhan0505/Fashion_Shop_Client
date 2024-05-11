@@ -75,13 +75,103 @@
   <div class="side-menu__content">
     <h2 routerLink="/" (click)="toggleMenu()">Menu</h2>
     <nav>
-      <ul>
+      <ul style="position: relative">
         <li routerLink="/" (click)="toggleMenu()">Home</li>
         <li routerLink="/cart" (click)="toggleMenu()">Cart</li>
         <li routerLink="/profile" (click)="toggleMenu()">Profile</li>
         <li routerLink="/order-history" (click)="toggleMenu()">
           Order History
         </li>
+        <li
+          (click)="toggleSubMenu()"
+          style="
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0;
+          "
+        >
+          Categories
+          <i
+            nz-icon
+            [nzType]="isSubMenuOpen ? 'down' : 'right'"
+            [ngStyle]="{
+              'font-size': '0.75rem',
+              'padding-top': '6px',
+              'margin-right': '10px',
+              transition: 'all ease-out 0.8s'
+            }"
+          ></i>
+        </li>
+        <ul [className]="isSubMenuOpen ? 'sub-menu show' : 'sub-menu'">
+          <li
+            class="sub-menu__gender"
+            (mouseenter)="toggleSubMenuMale('Male')"
+            (mouseleave)="toggleSubMenuMale('Male')"
+          >
+            Nam
+            <ul
+              [className]="
+                isSubMenuMale
+                  ? 'sub-menu__gender-male show'
+                  : 'sub-menu__gender-male'
+              "
+            >
+              <li
+                style="padding: 10px; text-align: center"
+                *ngFor="let c of categoriesMale"
+                (click)="handleGetProductByCategory(c.categoryId)"
+              >
+                {{ c.name }}
+              </li>
+            </ul>
+          </li>
+          <!-- Femal -->
+          <li
+            class="sub-menu__gender"
+            (mouseenter)="toggleSubMenuMale('Female')"
+            (mouseleave)="toggleSubMenuMale('Female')"
+          >
+            Nữ
+            <ul
+              [className]="
+                isSubMenuFeMale
+                  ? 'sub-menu__gender-male show'
+                  : 'sub-menu__gender-male'
+              "
+            >
+              <li
+                style="padding: 10px; text-align: center"
+                *ngFor="let c of categoriesFemale"
+                (click)="handleGetProductByCategory(c.categoryId)"
+              >
+                {{ c.name }}
+              </li>
+            </ul>
+          </li>
+          <!-- Both -->
+          <li
+            class="sub-menu__gender"
+            (mouseenter)="toggleSubMenuMale('Both')"
+            (mouseleave)="toggleSubMenuMale('Both')"
+          >
+            Nam và Nữ
+            <ul
+              [className]="
+                isSubMenuBothGender
+                  ? 'sub-menu__gender-male show'
+                  : 'sub-menu__gender-male'
+              "
+            >
+              <li
+                style="padding: 10px; text-align: center"
+                *ngFor="let c of categories"
+                (click)="handleGetProductByCategory(c.categoryId)"
+              >
+                {{ c.name }}
+              </li>
+            </ul>
+          </li>
+        </ul>
       </ul>
     </nav>
     <div class="auth-btn">

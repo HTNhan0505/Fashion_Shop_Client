@@ -46,7 +46,8 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCart();
-    this.getUser()
+    this.getUser();
+
   }
 
 
