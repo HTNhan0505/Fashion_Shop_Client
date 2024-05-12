@@ -50,5 +50,10 @@ export class ProductService {
     const url = `${this.apiUrlMain}users/product-by-category?categoryId=${id}&offset=${pageNumber}&limit=${pageSize}`;
     return this.http.get<any>(url);
   }
+  // Recommend
+  getRecommendProduct(id: any, pageNumber: number, pageSize: number): Observable<any> {
+    const url = `${this.apiUrlMain}users/product/recommend/${id}?offset=${pageNumber}&limit=${pageSize}`;
+    return this.http.get<any>(url);
+  }
 
 }

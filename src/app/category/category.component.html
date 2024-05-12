@@ -33,13 +33,31 @@
       </app-product-card>
     </div>
   </div>
+
   <div class="load-products" *ngIf="pageNumber + 1 < total">
+    <button nz-button (click)="previousPage()" [disabled]="pageNumber === 0">
+      Previous
+    </button>
+    <span style="margin: 50px">
+      {{
+        pageNumber != 0
+          ? "Page " + (pageNumber + 1) + "/" + total
+          : "Page 1" + "/" + total
+      }}</span
+    >
     <button
+      nz-button
+      (click)="nextPage()"
+      [disabled]="pageNumber === total - 1"
+    >
+      Next
+    </button>
+    <!-- <button
       nz-button
       (click)="showMoreProducts()"
       [nzLoading]="additionalLoading"
     >
       Show more
-    </button>
+    </button> -->
   </div>
 </div>

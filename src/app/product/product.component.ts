@@ -25,7 +25,7 @@ export class ProductComponent implements OnInit {
   imgBtns: any
   products: Product[] = [];
   pageNumber = 0;
-  pageSize = 4;
+  pageSize = 12;
   total = 0
   idFeedback: any
   dataFeedback: any
@@ -107,19 +107,35 @@ export class ProductComponent implements OnInit {
   }
   // Lấy product theo offset và limit
   getProduct() {
-    this._product.getProductList(this.pageNumber, this.pageSize).subscribe(
-      (res: any) => {
-        this.products = [...this.products, ...res.data];
-        this.total = Math.ceil(res.total / this.pageSize)
-      },
-      (err) => {
-        // console.log(err);
-      }
-    );
+    this._route.paramMap
+      .pipe(
+        map((param: any) => {
+          return param.params.id;
+        })
+      )
+      .subscribe((productId) => {
+        this._product.getRecommendProduct(productId, this.pageNumber, this.pageSize).subscribe(
+          (res: any) => {
+
+            window.scroll({
+              top: 0,
+              left: 0,
+              behavior: 'smooth'
+            });
+            this.products = [...this.products, ...res.data];
+            this.total = Math.ceil(res.total / this.pageSize)
+          },
+          (err) => {
+            // console.log(err);
+          }
+        );
+      });
+
 
   }
   // Hàm này handle cho nút show more sẽ tăng offset thêm 1
   showMoreProducts(): void {
+
     this.pageNumber++;
     this.getProduct()
   }

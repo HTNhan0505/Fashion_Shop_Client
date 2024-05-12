@@ -34,7 +34,9 @@
               nz-button
               type="submit"
               [nzLoading]="loading"
-              [disabled]="order.status == 'CANCELED'"
+              [disabled]="
+                order.status == 'CANCELED' || order.status == 'RECEIVED'
+              "
               (click)="cancelOrder(order.orderID)"
             >
               Cancel

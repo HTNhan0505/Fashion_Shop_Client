@@ -63,6 +63,7 @@ export class HeaderComponent implements OnInit {
       this.getCart();
     })
 
+
   }
 
   ngOnInit(): void {

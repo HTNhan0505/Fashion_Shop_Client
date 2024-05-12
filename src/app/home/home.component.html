@@ -65,18 +65,23 @@
     </div>
   </div>
 
-  <div class="load-products" *ngIf="pageNumber + 1 < total">
+  <div class="load-products" *ngIf="!loading">
+    <button nz-button (click)="previousPage()" [disabled]="pageNumber === 0">
+      Previous
+    </button>
+    <span style="margin: 50px">
+      {{
+        pageNumber != 0
+          ? "Page " + (pageNumber + 1) + "/" + totalPages
+          : "Page 1" + "/" + totalPages
+      }}</span
+    >
     <button
       nz-button
-      (click)="showMoreProducts()"
-      [nzLoading]="additionalLoading"
+      (click)="nextPage()"
+      [disabled]="pageNumber === totalPages - 1"
     >
-      Show more
+      Next
     </button>
-    <!-- <nz-pagination
-      (nzPageIndexChange)="loadProduct()"
-      [nzPageIndex]="1"
-      [nzTotal]="50"
-    ></nz-pagination> -->
   </div>
 </div>

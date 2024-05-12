@@ -45,8 +45,7 @@ export class HomeComponent implements OnInit {
   loading = false;
   pageNumber = 0;
   pageSize = 12;
-  total = 0
-  productPageCounter = 1;
+  totalPages = 0;
   additionalLoading = false;
   slideIndex: number
 
@@ -85,22 +84,14 @@ export class HomeComponent implements OnInit {
     this.productService.getProductList(this.pageNumber, this.pageSize).subscribe(
       (res: any) => {
         this.loading = false
-        this.products = [...this.products, ...res.data];
-        this.additionalLoading = false;
-        this.total = Math.ceil(res.total / this.pageSize)
+        this.products = res.data;
+        this.totalPages = Math.ceil(res.total / this.pageSize);
       },
       (err) => {
         this.additionalLoading = false;
       }
     );
 
-  }
-
-  // Hàm này handle cho nút show more sẽ tăng offset thêm 1
-  showMoreProducts(): void {
-    this.additionalLoading = true;
-    this.pageNumber++;
-    this.getProduct()
   }
 
   // Render slide cho banner
@@ -135,5 +126,22 @@ export class HomeComponent implements OnInit {
   }
   handleGetProductByCategory(id: any) {
     this._router.navigate([`category/${id}`]);
+  }
+
+  previousPage(): void {
+    this.loading = true
+    if (this.pageNumber > 0) {
+      this.pageNumber--;
+      this.getProduct();
+    }
+  }
+
+  nextPage(): void {
+    this.loading = true
+    if (this.pageNumber < this.totalPages) {
+
+      this.pageNumber++;
+      this.getProduct();
+    }
   }
 }
