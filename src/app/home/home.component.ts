@@ -11,6 +11,7 @@ import { TokenStorageService } from '../services/token-storage.service';
 import { ShareService } from '../services/share.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -57,7 +58,10 @@ export class HomeComponent implements OnInit {
     private _share: ShareService,
     private _router: Router,
   ) {
-
+    let isToken = this._token.getToken();
+    if (!isToken) {
+      window.location.href = 'login';
+    }
   }
 
   public screenWidth: any;
@@ -79,6 +83,7 @@ export class HomeComponent implements OnInit {
     this.changeSlide()
     this._share.sendClickEvent();
   }
+
   // Lấy product theo offset và limit
   getProduct() {
     this.productService.getProductList(this.pageNumber, this.pageSize).subscribe(

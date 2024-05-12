@@ -19,8 +19,8 @@ import { ThankYouComponent } from './thank-you/thank-you.component';
 import { ConfirmBankingComponent } from './confirm-banking/confirm-banking.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
+  { path: '', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'verify', component: VerifyComponent },
   {
