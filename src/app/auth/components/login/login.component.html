@@ -24,14 +24,14 @@
       />
     </div>
     <form (ngSubmit)="onSubmit()">
-      <h3>Login Form</h3>
+      <h3>Đăng Nhập</h3>
       <div class="form-wrapper">
         <input
           nz-input
           class="form-control"
           type="email"
           name="email"
-          placeholder="Enter email address"
+          placeholder="Nhập địa chỉ email"
           [(ngModel)]="email"
         />
       </div>
@@ -41,7 +41,7 @@
           class="form-control"
           type="password"
           name="password"
-          placeholder="Enter your password"
+          placeholder="Mật khẩu"
           [(ngModel)]="password"
         />
       </div>
@@ -52,12 +52,12 @@
           [disabled]="!canSubmit()"
           [nzLoading]="loading"
         >
-          Sign in
+          Đăng nhập
         </button>
       </div>
       <div class="form-group mt-30 j-between">
-        <a class="navigate-link" (click)="checkEmail()">Forgot password?</a>
-        <a class="navigate-link" routerLink="/register">Create a new account</a>
+        <a class="navigate-link" (click)="checkEmail()">Quên mật khẩu ?</a>
+        <a class="navigate-link" routerLink="/register">Tạo tài khoản mới</a>
       </div>
     </form>
   </div>

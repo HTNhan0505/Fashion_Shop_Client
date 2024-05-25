@@ -10,7 +10,7 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./category.component.scss']
 })
 export class CategoryComponent implements OnInit {
-  products: Product[] = [];
+  products: any = [];
   pageNumber = 0;
   pageSize = 12;
   total = 0;
@@ -27,16 +27,7 @@ export class CategoryComponent implements OnInit {
     this._activeRoute.url.subscribe(url => {
       this.loading = true;
       this.getProductByCategory(url[1].path)
-      console.log(url[1].path);
     });
-
-    // this.router.events.pipe(
-    //   filter(event => event instanceof NavigationEnd)
-    // ).subscribe((event: NavigationEnd) => {
-    //   const parts = event.url.split("/"); 
-    //   const lastPart = parts.pop(); 
-    //   console.log("id", lastPart)
-    // });
   }
 
   getProductByCategory(id: any) {
@@ -51,7 +42,6 @@ export class CategoryComponent implements OnInit {
       }
       this.loading = false
       this.additionalLoading = false;
-      // console.log(result)
     });
   }
 

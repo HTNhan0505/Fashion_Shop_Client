@@ -4,10 +4,10 @@
   style="background-image: url('../../../../assets/bg-registration-form-1.jpg')"
 >
   <section class="table__header">
-    <h1>History Orders</h1>
+    <h1>Chi tiết đơn hàng</h1>
     <div class="input-group">
       <span style="font-size: 22px; font-weight: 700"
-        >Total : {{ total | currency : "VND" }}</span
+        >Tổng tiền : {{ total | currency : "VND" }}</span
       >
       <!-- <span>{{ total }}</span> -->
     </div>
@@ -16,12 +16,12 @@
     <table>
       <thead>
         <tr>
-          <th>No</th>
-          <th>Image</th>
-          <th>Name</th>
-          <th>Quantity</th>
-          <th>Price</th>
-          <th *ngIf="statusOrder === 'RECEIVED'">Feedback</th>
+          <th>Thứ tự</th>
+          <th>Hình ảnh</th>
+          <th>Tên</th>
+          <th>Số lượng</th>
+          <th>Gía tiền</th>
+          <th *ngIf="statusOrder === 'RECEIVED'">Đánh giá</th>
         </tr>
       </thead>
       <tbody>
@@ -42,7 +42,7 @@
               (click)="openDialog(order.productID)"
               [disabled]="order.IsRate"
             >
-              Feedback
+              {{ order.IsRate ? "Đã đánh giá" : "Đánh giá" }}
             </button>
           </td>
         </tr>

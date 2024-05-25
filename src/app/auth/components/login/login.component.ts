@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { ShareService } from 'src/app/services/share.service';
+// import { HeaderComponent } from 'src/app/header/header.component';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,8 @@ export class LoginComponent implements OnInit {
   password = '';
   error = '';
   loading = false;
+  // @Output() myEvent = new EventEmitter();
+
   constructor(
     private _auth: AuthService,
     private _router: Router,
@@ -21,7 +24,7 @@ export class LoginComponent implements OnInit {
     private _share: ShareService,
   ) { }
 
-  ngOnInit(): void { localStorage.clear() }
+  ngOnInit(): void { localStorage.clear(); sessionStorage.clear(); }
 
   onSubmit(): void {
     this.loading = true;
@@ -34,11 +37,10 @@ export class LoginComponent implements OnInit {
         .subscribe(
           (res) => {
             this.loading = false;
-            this._router.navigate(['/']);
             this._share.sendClickEvent();
+            this._router.navigate(['/']);
           },
           (err) => {
-            // console.log(err);
             this.error = err.error.message;
             this.loading = false;
             this._notification.error(

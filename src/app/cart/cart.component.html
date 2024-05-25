@@ -1,10 +1,10 @@
 <div class="cart-container">
   <div class="cart-container__empty" *ngIf="total === 0">
-    Your cart is empty.
+    Giỏ hàng đang trống hay đặt hàng!
   </div>
   <div class="cart-container__list" *ngIf="total > 0">
     <header class="list-header">
-      <h2>Cart</h2>
+      <h2>Giỏ hàng</h2>
     </header>
     <div
       class="list-item"
@@ -40,11 +40,11 @@
   <div class="cart-container__total">
     <div class="price">
       <span>
-        <h3>Total amount</h3>
+        <h3>Tổng tiền thanh toán</h3>
         <h2>{{ (!totalAmount ? 0 : totalAmount) | currency : "VND" }}</h2></span
       >
       <span>
-        <h3>Total items</h3>
+        <h3>Tổng sản phẩm đặt</h3>
         <h2>{{ total }}</h2>
       </span>
       <span style="margin-top: 15px">
@@ -60,9 +60,9 @@
         (click)="checkoutItem()"
         [disabled]="total === 0"
       >
-        Checkout
+        Thanh toán
       </button>
-      <button nz-button routerLink="/">Back to shopping</button>
+      <button nz-button routerLink="/">Trở lại mua sắm</button>
     </div>
   </div>
 </div>

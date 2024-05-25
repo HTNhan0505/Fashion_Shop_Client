@@ -1,8 +1,8 @@
 <div class="home-container">
   <!-- Product -->
   <div class="products">
-    <div class="products__header">
-      <h2>Product</h2>
+    <div class="products__header" *ngIf="!checkProduct && !loading">
+      <h2>{{ products[0].categoryName }}</h2>
     </div>
 
     <div *ngIf="loading" class="products__loading">
@@ -16,9 +16,10 @@
       <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
     </div>
 
-    <div *ngIf="checkProduct" class="products__loading">
-      <h3>Sorry list product of this category can out stock</h3>
+    <div *ngIf="checkProduct && !loading" class="products__loading">
+      <h3>Sản phẩm của danh mục tạm thời đã hết vui lòng trở lại sau!</h3>
     </div>
+
     <div class="products__list" *ngIf="!loading">
       <app-product-card
         *ngFor="let n of products"
@@ -34,9 +35,12 @@
     </div>
   </div>
 
-  <div class="load-products" *ngIf="pageNumber + 1 < total">
+  <div
+    class="load-products"
+    *ngIf="pageNumber + 1 < total && !checkProduct && !loading"
+  >
     <button nz-button (click)="previousPage()" [disabled]="pageNumber === 0">
-      Previous
+      Trước
     </button>
     <span style="margin: 50px">
       {{
@@ -50,14 +54,7 @@
       (click)="nextPage()"
       [disabled]="pageNumber === total - 1"
     >
-      Next
+      Sau
     </button>
-    <!-- <button
-      nz-button
-      (click)="showMoreProducts()"
-      [nzLoading]="additionalLoading"
-    >
-      Show more
-    </button> -->
   </div>
 </div>

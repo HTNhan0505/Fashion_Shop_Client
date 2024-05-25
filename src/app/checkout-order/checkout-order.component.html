@@ -1,10 +1,10 @@
 <div class="cart-container">
   <div class="cart-container__empty" *ngIf="total === 0">
-    Your cart is empty.
+    Giỏ hàng đang trống.
   </div>
   <div class="cart-container__list" *ngIf="total > 0">
     <header class="list-header">
-      <h2>Orders</h2>
+      <h2>Sản phẩm đã đặt</h2>
     </header>
     <div
       class="list-item"
@@ -17,7 +17,7 @@
       <div class="list-item__details">
         <div class="title">{{ product.productName }}</div>
         <div class="price">{{ product.price | currency : "VND" }}</div>
-        <div class="price">Quantity : {{ product.itemQuantity }}</div>
+        <div class="price">Số lượng : {{ product.itemQuantity }}</div>
       </div>
     </div>
   </div>
@@ -25,7 +25,7 @@
     <div class="price">
       <!-- Total item -->
       <span>
-        <p class="mb-0">Total items :</p>
+        <p class="mb-0">Tổng số sản phẩm :</p>
         <p class="mb-0" style="margin-left: 20px">{{ total }}</p>
       </span>
       <!-- Local -->
@@ -36,19 +36,19 @@
       </span>
       <!-- Price shipment -->
       <span>
-        <p class="mb-0">Shipment :</p>
+        <p class="mb-0">Phí ship :</p>
         <p class="mb-0" style="margin-left: 20px">
           {{ shipFee | currency : "VND" }}
         </p>
       </span>
       <!-- Estimated day -->
       <span>
-        <p class="mb-0">Estimated day :</p>
+        <p class="mb-0">Thời gian nhận hàng dự kiến :</p>
         <p class="mb-0" style="margin-left: 20px">{{ total }}</p>
       </span>
 
       <span>
-        <h3>Total amount</h3>
+        <h3>Tổng tiền</h3>
         <h2>{{ (!totalAmount ? 0 : totalAmount) | currency : "VND" }}</h2></span
       >
     </div>
@@ -60,16 +60,16 @@
         (click)="checkoutItem()"
         [disabled]="total === 0 || !paymentMethod"
       >
-        Order
+        Đặt hàng
       </button>
       <div class="form-wrapper">
-        <p class="mb-0">Payment</p>
+        <p class="mb-0">Phương thức thanh toán</p>
         <select [(ngModel)]="paymentMethod" class="form-control" name="payment">
           <option [value]="'COD'">COD</option>
           <option [value]="'VNPAY'">VNpay</option>
         </select>
       </div>
-      <button nz-button routerLink="/cart">Cancel</button>
+      <button nz-button routerLink="/cart">Hủy thanh toán</button>
     </div>
   </div>
 </div>

@@ -7,8 +7,6 @@ import { Router } from '@angular/router';
 import { Subscription, of } from 'rxjs';
 import { ShareService } from '../services/share.service';
 import { ProductService } from '../services/product.service';
-import { ActivatedRoute } from '@angular/router';
-
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -61,16 +59,18 @@ export class HeaderComponent implements OnInit {
     });
     this.updateTotal = this._share.getClickEvent().subscribe(() => {
       this.getCart();
+      this.getCategory();
     })
-
-
   }
 
   ngOnInit(): void {
     if (this._token.getUser()) this.isLoggedIn = true;
     else this.isLoggedIn = false;
-
-
+    console.log('Init');
+    this.getCategory()
+    this.getCart()
+  }
+  getCategory() {
     this.productService.getCategoryList().subscribe(
       (res: any) => {
         for (let item of res.data) {
@@ -87,7 +87,6 @@ export class HeaderComponent implements OnInit {
 
       }
     );
-    this.getCart()
   }
 
   // Get category

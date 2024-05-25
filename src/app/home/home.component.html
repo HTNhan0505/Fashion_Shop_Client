@@ -27,7 +27,7 @@
                   {{ banner[slideIndex].detail }}
                 </p>
                 <br />
-                <a href="#">BUY NOW</a>
+                <a href="#">MUA NGAY</a>
               </div>
             </div>
           </div>
@@ -38,7 +38,7 @@
   <!-- Product -->
   <div class="products">
     <div class="products__header">
-      <h2>Product</h2>
+      <h2>Sản phẩm</h2>
     </div>
     <div *ngIf="loading" class="products__loading">
       <ng-template #indicatorTemplate>
@@ -67,7 +67,7 @@
 
   <div class="load-products" *ngIf="!loading">
     <button nz-button (click)="previousPage()" [disabled]="pageNumber === 0">
-      Previous
+      Trước
     </button>
     <span style="margin: 50px">
       {{
@@ -81,7 +81,7 @@
       (click)="nextPage()"
       [disabled]="pageNumber === totalPages - 1"
     >
-      Next
+      Sau
     </button>
   </div>
 </div>

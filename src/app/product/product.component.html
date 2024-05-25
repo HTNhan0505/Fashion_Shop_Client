@@ -38,24 +38,33 @@
       </div>
 
       <div class="product-price">
-        <p class="last-price">Old Price: <span>VNĐ 257.00</span></p>
+        <p class="last-price">Giá cũ : <span>VNĐ 257.00</span></p>
         <p class="new-price">
-          New Price: <span>{{ product.price | currency : "VND" }}</span>
+          Giá đang giảm: <span>{{ product.price | currency : "VND" }}</span>
         </p>
       </div>
 
       <div class="product-detail">
-        <h2>about this item:</h2>
+        <h2>Mô tả sản phẩm:</h2>
         <p>
           {{ product.detail }}
         </p>
         <ul>
-          <li>Available: <span>in stock</span></li>
+          <li>Trạng thái: <span>Còn hàng</span></li>
           <li>
-            Gender: <span>{{ product.gender }}</span>
+            Giới tính :
+            <span
+              >{{
+                product.gender == "Men"
+                  ? "Nam"
+                  : product.gender == "Women"
+                  ? "Nữ"
+                  : "Nam và Nữ"
+              }}
+            </span>
           </li>
-          <li>Shipping Area: <span>All over the world</span></li>
-          <li>Shipping Fee: <span>Free</span></li>
+          <li>Giao hàng trong: <span>Toàn quốc</span></li>
+          <!-- <li>Shipping Fee: <span>Free</span></li> -->
         </ul>
       </div>
 
@@ -73,7 +82,7 @@
           class="btn"
           (click)="addToCart()"
         >
-          Add to Cart <i class="fas fa-shopping-cart"></i>
+          Thêm vào giỏ hàng <i class="fas fa-shopping-cart"></i>
         </button>
       </div>
     </div>
@@ -84,7 +93,7 @@
 <div class="home-container" *ngIf="dataFeedback != null">
   <div class="products">
     <div class="products__header">
-      <h2>Feedback</h2>
+      <h2>Đánh giá sản phẩm</h2>
     </div>
 
     <div class="testimonial-box-container" *ngFor="let n of dataFeedback">
@@ -136,9 +145,12 @@
       </div>
     </div>
 
-    <div class="testimonial-box-container__pagination">
+    <div
+      class="testimonial-box-container__pagination"
+      *ngIf="dataFeedback.length > 4"
+    >
       <button nz-button (click)="previousPage()" [disabled]="currentPage === 0">
-        Previous
+        Trước
       </button>
       <span> {{ currentPage != 0 ? "Page " + currentPage : "" }}</span>
       <button
@@ -146,25 +158,25 @@
         (click)="nextPage()"
         [disabled]="currentPage === totalPages - 1"
       >
-        Next
+        Sau
       </button>
     </div>
   </div>
 </div>
 
-<div class="home-container" *ngIf="dataFeedback === null">
+<!-- <div class="home-container" *ngIf="dataFeedback === null">
   <div class="products">
     <div class="products__header">
       <h2>The product has not yet been rated !!!!</h2>
     </div>
   </div>
-</div>
+</div> -->
 
 <div class="home-container">
   <!-- Product -->
   <div class="products">
     <div class="products__header">
-      <h2>Recommend</h2>
+      <h2>Sản phẩm tương tự</h2>
     </div>
     <div *ngIf="loading" class="products__loading">
       <ng-template #indicatorTemplate>
@@ -197,7 +209,7 @@
       (click)="showMoreProducts()"
       [nzLoading]="additionalLoading"
     >
-      Show more
+      Xem thêm
     </button>
   </div>
 </div>

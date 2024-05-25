@@ -4,17 +4,17 @@
   style="background-image: url('../../../../assets/bg-registration-form-1.jpg')"
 >
   <section class="table__header">
-    <h1>History Orders</h1>
+    <h1>Lịch sử đặt hàng</h1>
   </section>
   <section class="table__body">
     <table>
       <thead>
         <tr>
-          <th>No</th>
-          <th>Location <span class="icon-arrow"></span></th>
-          <th>Status</th>
-          <th>Amount</th>
-          <th style="z-index: 999">Action</th>
+          <th>Mã đơn hàng</th>
+          <th>Địa chỉ <span class="icon-arrow"></span></th>
+          <th>Trạng thái</th>
+          <th>Tổng tiền</th>
+          <th style="z-index: 999">Tùy chọn</th>
         </tr>
       </thead>
       <tbody>
@@ -23,7 +23,7 @@
           style="cursor: pointer"
           (click)="handleSingleOrder(order.orderID)"
         >
-          <td>{{ i + 1 }}</td>
+          <td>{{ order.orderID }}</td>
           <td>{{ order.address }}</td>
           <td [ngClass]="order.status">{{ order.status }}</td>
           <td>
@@ -39,7 +39,7 @@
               "
               (click)="cancelOrder(order.orderID)"
             >
-              Cancel
+              Hủy
             </button>
           </td>
         </tr>

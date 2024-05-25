@@ -48,8 +48,6 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
     this.imgs = document.querySelectorAll('.img-select a');
     this.imgBtns = [...this.imgs];
-
-
     this.loading = true;
     this.getSingleProduct()
     this.getProduct()
@@ -57,6 +55,7 @@ export class ProductComponent implements OnInit {
   }
 
   changeSlide(id: any) {
+    console.log('Index', id);
     const displayWidth = document.querySelector('.img-showcase img:first-child').clientWidth;
     document.querySelector<HTMLElement>('.img-showcase').style.transform = `translateX(${- (id - 1) * displayWidth}px)`;
   }
@@ -71,9 +70,26 @@ export class ProductComponent implements OnInit {
       .subscribe((productId) => {
         this._product.getSingleProduct(productId).subscribe((product) => {
           this.product = product;
-          this.showcaseImages = product.listImage
+          if (product.listImage.length > 5) {
+            this.showcaseImages = product.listImage.slice(0, 5)
+
+          } else {
+            this.showcaseImages = product.listImage
+
+          }
+          this.changeSlide(1);
           if (product.quantity === 0) this.quantity = 0;
           else this.quantity = 1;
+          window.scroll({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+          });
+          this.products = [];
+
+
+          // this.getProduct();
+          this.getFeedback();
 
           this.loading = false;
         });
@@ -116,12 +132,6 @@ export class ProductComponent implements OnInit {
       .subscribe((productId) => {
         this._product.getRecommendProduct(productId, this.pageNumber, this.pageSize).subscribe(
           (res: any) => {
-
-            window.scroll({
-              top: 0,
-              left: 0,
-              behavior: 'smooth'
-            });
             this.products = [...this.products, ...res.data];
             this.total = Math.ceil(res.total / this.pageSize)
           },
@@ -135,7 +145,6 @@ export class ProductComponent implements OnInit {
   }
   // Hàm này handle cho nút show more sẽ tăng offset thêm 1
   showMoreProducts(): void {
-
     this.pageNumber++;
     this.getProduct()
   }

@@ -31,7 +31,7 @@
         [(ngModel)]="keyWord"
         type="text"
         nz-input
-        placeholder="Search product"
+        placeholder="Tên sản phẩm , danh mục"
       />
     </nz-input-group>
     <ng-template #suffixIconButton>
@@ -76,11 +76,11 @@
     <h2 routerLink="/" (click)="toggleMenu()">Menu</h2>
     <nav>
       <ul style="position: relative">
-        <li routerLink="/" (click)="toggleMenu()">Home</li>
-        <li routerLink="/cart" (click)="toggleMenu()">Cart</li>
-        <li routerLink="/profile" (click)="toggleMenu()">Profile</li>
+        <li routerLink="/" (click)="toggleMenu()">Trang chủ</li>
+        <li routerLink="/cart" (click)="toggleMenu()">Giỏ hàng</li>
+        <li routerLink="/profile" (click)="toggleMenu()">Cá nhân</li>
         <li routerLink="/order-history" (click)="toggleMenu()">
-          Order History
+          Lịch sử đặt hàng
         </li>
         <li
           (click)="toggleSubMenu()"
@@ -90,7 +90,7 @@
             margin-bottom: 0;
           "
         >
-          Categories
+          Danh mục
           <i
             nz-icon
             [nzType]="isSubMenuOpen ? 'down' : 'right'"
@@ -181,7 +181,7 @@
         (click)="toggleMenu()"
         *ngIf="!isLoggedIn"
       >
-        Sign in
+        Đăng nhập
       </button>
       <button
         nz-button
@@ -189,7 +189,7 @@
         (click)="toggleMenu()"
         *ngIf="!isLoggedIn"
       >
-        Sign up
+        Đăng kí
       </button>
       <button
         routerLink="/login"
@@ -197,7 +197,7 @@
         (click)="logout() && toggleMenu()"
         *ngIf="isLoggedIn"
       >
-        Sign out
+        Đăng xuất
       </button>
     </div>
   </div>
